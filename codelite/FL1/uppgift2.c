@@ -6,6 +6,8 @@ void uppgift2(char str[]) {
     for(int i=len-1; i>=0; i--) {
         printf("%c",str[i]);
     }
+
+
 }
 int main(int argc, char **argv)
 {
