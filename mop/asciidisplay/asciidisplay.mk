@@ -3,17 +3,17 @@
 ## any manual changes will be erased      
 ##
 ## Debug
-ProjectName            :=basic_io
+ProjectName            :=asciidisplay
 ConfigurationName      :=Debug
 WorkspacePath          :=/Users/krulla/chalmers/dat017/mop
-ProjectPath            :=/Users/krulla/chalmers/dat017/mop/basic_io
+ProjectPath            :=/Users/krulla/chalmers/dat017/mop/asciidisplay
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Mikael Lönn
-Date                   :=14/02/2019
+Date                   :=15/02/2019
 CodeLitePath           :="/Users/krulla/Library/Application Support/CodeLite"
 LinkerName             :=/Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/bin/arm-none-eabi-g++
 SharedObjectLinkerName :=/Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/bin/arm-none-eabi-g++ -shared -fPIC
@@ -28,11 +28,11 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=$(IntermediateDirectory)/$(ProjectName).elf
-Preprocessors          :=
+Preprocessors          :=$(PreprocessorSwitch)SIMULATOR 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
-ObjectsFileList        :="basic_io.txt"
+ObjectsFileList        :="asciidisplay.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            :=  -T$(ProjectPath)/md407-ram.x -L$(ARM_V6LIB) -L$(ARM_GCC_V6LIB) -nostartfiles
@@ -85,8 +85,8 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 
 PostBuild:
 	@echo Executing Post Build commands ...
-	/Applications/codelite.app/Contents/SharedSupport//tools/gcc-arm/arm-none-eabi/bin/objcopy -S -O srec  ./Debug/basic_io.elf ./Debug/basic_io.s19
-	/Applications/codelite.app/Contents/SharedSupport//tools/gcc-arm/arm-none-eabi/bin/objdump -D -S ./Debug/basic_io.elf > ./Debug/basic_io.dass
+	/Applications/codelite.app/Contents/SharedSupport//tools/gcc-arm/arm-none-eabi/bin/objcopy -S -O srec  ./Debug/asciidisplay.elf ./Debug/asciidisplay.s19
+	/Applications/codelite.app/Contents/SharedSupport//tools/gcc-arm/arm-none-eabi/bin/objdump -D -S ./Debug/asciidisplay.elf > ./Debug/asciidisplay.dass
 	@echo Done
 
 MakeIntermediateDirs:
@@ -103,7 +103,7 @@ PreBuild:
 ## Objects
 ##
 $(IntermediateDirectory)/startup.c$(ObjectSuffix): startup.c $(IntermediateDirectory)/startup.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/Users/krulla/chalmers/dat017/mop/basic_io/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "/Users/krulla/chalmers/dat017/mop/asciidisplay/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/startup.c$(DependSuffix): startup.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/startup.c$(ObjectSuffix) -MF$(IntermediateDirectory)/startup.c$(DependSuffix) -MM startup.c
 
