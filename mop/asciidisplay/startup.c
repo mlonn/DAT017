@@ -69,7 +69,7 @@ void ascii_ctrl_bit_clear( unsigned char x ) {
     unsigned char c;
     c = GPIO_E.odrLow;
     c &= ( B_SELECT | ~x );
-    c = GPIO_E.odrLow;
+    GPIO_E.odrLow = c;
 }
 
 void ascii_write_controller( unsigned char c ) {
@@ -141,12 +141,18 @@ void entry_mode(){
     delay_micro(8);
     ascii_write_cmd(0b110);
     delay_micro(50);
-
+}
+void clear_display() {
+    while((ascii_read_status() & 0x80) == 0x80) {}
+    delay_micro(8);
+    ascii_write_cmd(1);
+    delay_milli(2);
 }
 void ascii_init(){
     function_set(); 
     display_control();
     entry_mode();
+    clear_display();
 }
 void startup(void) __attribute__((naked)) __attribute__((section (".start_section")) );
 
