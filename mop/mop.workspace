@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="mop" Database="" Version="10.0.0">
   <Project Name="basic_io" Path="basic_io/basic_io.project" Active="No"/>
-  <Project Name="keypad" Path="keypad/keypad.project" Active="No"/>
+  <Project Name="keypad" Path="keypad/keypad.project" Active="Yes"/>
   <Project Name="delay" Path="delay/delay.project" Active="No"/>
   <Project Name="asciidisplay" Path="asciidisplay/asciidisplay.project" Active="No"/>
-  <Project Name="graphicdislpay" Path="graphicdislpay/graphicdislpay.project" Active="Yes"/>
+  <Project Name="graphicdislpay" Path="graphicdislpay/graphicdislpay.project" Active="No"/>
+  <Project Name="lab2_1" Path="lab2_1/lab2_1.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment>GccArmDir = $(CodeliteDir)/tools/gcc-arm</Environment>
@@ -13,6 +14,7 @@
       <Project Name="delay" ConfigName="Debug"/>
       <Project Name="asciidisplay" ConfigName="Debug"/>
       <Project Name="graphicdislpay" ConfigName="Debug"/>
+      <Project Name="lab2_1" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -21,6 +23,7 @@
       <Project Name="delay" ConfigName="Release"/>
       <Project Name="asciidisplay" ConfigName="Release"/>
       <Project Name="graphicdislpay" ConfigName="Release"/>
+      <Project Name="lab2_1" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

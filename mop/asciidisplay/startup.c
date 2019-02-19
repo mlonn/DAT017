@@ -117,6 +117,8 @@ void ascii_write_char(unsigned char c) {
 }
 
 void ascii_gotoxy(int row, int column){
+	while((ascii_read_status() & 0x80) == 0x80) 
+	delay_micro(8);
     unsigned char address = row-1;
     if (column == 2){
         address += 0x40;
@@ -165,14 +167,20 @@ __asm volatile(
 	".L1: B .L1\n"				/* never return */
 	) ;
 }
+
 void init_app() {
+#ifdef USBDM
+	*((unsigned long *)0x40023830)  = 0x18;
+	__asm volatile( " LDR R0,=0x08000209\n BLX R0 \n");
+#endif
     GPIO_E.moder = 0x55555555;
 }
+
 void main(void)
 {
     char *s;
-    char test1[] = "Alfanumerisk";
-    char test2[] = "Display - test";
+    char test1[] = "Lab 2.3";
+    char test2[] = "FTW! :-)";
     
     init_app();
     ascii_init();

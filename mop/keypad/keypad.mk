@@ -5,18 +5,18 @@
 ## Debug
 ProjectName            :=keypad
 ConfigurationName      :=Debug
-WorkspacePath          :=/Users/krulla/chalmers/dat017/mop
-ProjectPath            :=/Users/krulla/chalmers/dat017/mop/keypad
+WorkspacePath          :=C:/Users/mlonn/Desktop/DAT017/mop
+ProjectPath            :=C:/Users/mlonn/Desktop/DAT017/mop/keypad
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Mikael Lönn
-Date                   :=14/02/2019
-CodeLitePath           :="/Users/krulla/Library/Application Support/CodeLite"
-LinkerName             :=/Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/bin/arm-none-eabi-g++
-SharedObjectLinkerName :=/Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/bin/arm-none-eabi-g++ -shared -fPIC
+User                   :=mlonn
+Date                   :=19/02/2019
+CodeLitePath           :=C:/cseapp/CodeLite
+LinkerName             :=$(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-g++.exe
+SharedObjectLinkerName :=$(CodeLiteDir)/tools/gcc-arm/arm-none-eabi-g++.exe -shared -fPIC
 ObjectSuffix           :=.o
 DependSuffix           :=.o.d
 PreprocessSuffix       :=.i
@@ -28,13 +28,15 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=$(IntermediateDirectory)/$(ProjectName).elf
-Preprocessors          :=
+Preprocessors          :=$(PreprocessorSwitch)USBDM 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
 ObjectsFileList        :="keypad.txt"
 PCHCompileFlags        :=
-MakeDirCommand         :=mkdir -p
+MakeDirCommand         :=makedir
+RcCmpOptions           := 
+RcCompilerName         :=
 LinkOptions            :=  -T$(ProjectPath)/md407-ram.x -L$(ARM_V6LIB) -L$(ARM_GCC_V6LIB) -nostartfiles
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
 IncludePCH             := 
@@ -47,19 +49,19 @@ LibPath                := $(LibraryPathSwitch).
 ## Common variables
 ## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := /Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/bin/arm-none-eabi-ar rcu
-CXX      := /Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/bin/arm-none-eabi-g++
-CC       := /Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/bin/arm-none-eabi-gcc
+AR       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-ar.exe rcu
+CXX      := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-g++.exe
+CC       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-gcc.exe
 CXXFLAGS :=  -g -O0 -W $(Preprocessors)
 CFLAGS   :=  -g -O0 -w -mthumb -march=armv6-m  -mfloat-abi=soft -std=c99 $(Preprocessors)
 ASFLAGS  := 
-AS       := /Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/bin/arm-none-eabi-as
+AS       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-as.exe
 
 
 ##
 ## User defined environment variables
 ##
-CodeLiteDir:=/Applications/codelite.app/Contents/SharedSupport/
+CodeLiteDir:=C:\cseapp\CodeLite
 GccArmDir := $(CodeliteDir)/tools/gcc-arm
 ARM_V6LIB:=$(CodeLiteDir)/tools/gcc-arm/arm-none-eabi/lib/thumb/v6-m
 ARM_GCC_V6LIB:=$(CodeLiteDir)/tools/gcc-arm/lib/gcc/arm-none-eabi/7.2.1/thumb/v6-m
@@ -85,16 +87,16 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 
 PostBuild:
 	@echo Executing Post Build commands ...
-	/Applications/codelite.app/Contents/SharedSupport//tools/gcc-arm/arm-none-eabi/bin/objcopy -S -O srec  ./Debug/keypad.elf ./Debug/keypad.s19
-	/Applications/codelite.app/Contents/SharedSupport//tools/gcc-arm/arm-none-eabi/bin/objdump -D -S ./Debug/keypad.elf > ./Debug/keypad.dass
+	C:\cseapp\CodeLite/tools/gcc-arm/arm-none-eabi/bin/objcopy -S -O srec  ./Debug/keypad.elf ./Debug/keypad.s19
+	C:\cseapp\CodeLite/tools/gcc-arm/arm-none-eabi/bin/objdump -D -S ./Debug/keypad.elf > ./Debug/keypad.dass
 	@echo Done
 
 MakeIntermediateDirs:
-	@test -d ./Debug || $(MakeDirCommand) ./Debug
+	@$(MakeDirCommand) "./Debug"
 
 
 $(IntermediateDirectory)/.d:
-	@test -d ./Debug || $(MakeDirCommand) ./Debug
+	@$(MakeDirCommand) "./Debug"
 
 PreBuild:
 
@@ -103,7 +105,7 @@ PreBuild:
 ## Objects
 ##
 $(IntermediateDirectory)/startup.c$(ObjectSuffix): startup.c $(IntermediateDirectory)/startup.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/Users/krulla/chalmers/dat017/mop/keypad/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "C:/Users/mlonn/Desktop/DAT017/mop/keypad/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/startup.c$(DependSuffix): startup.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/startup.c$(ObjectSuffix) -MF$(IntermediateDirectory)/startup.c$(DependSuffix) -MM startup.c
 
