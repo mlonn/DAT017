@@ -1,8 +1,8 @@
 .PHONY: clean All
 
 All:
-	@echo "----------Building project:[ graphicdislpay - Debug ]----------"
-	@cd "graphicdislpay" && "$(MAKE)" -f  "graphicdislpay.mk" && "$(MAKE)" -f  "graphicdislpay.mk" PostBuild
+	@echo "----------Building project:[ autopong - Debug ]----------"
+	@cd "autopong" && "$(MAKE)" -f  "autopong.mk" && "$(MAKE)" -f  "autopong.mk" PostBuild
 clean:
-	@echo "----------Cleaning project:[ graphicdislpay - Debug ]----------"
-	@cd "graphicdislpay" && "$(MAKE)" -f  "graphicdislpay.mk" clean
+	@echo "----------Cleaning project:[ autopong - Debug ]----------"
+	@cd "autopong" && "$(MAKE)" -f  "autopong.mk" clean

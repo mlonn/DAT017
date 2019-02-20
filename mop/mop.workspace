@@ -4,7 +4,8 @@
   <Project Name="keypad" Path="keypad/keypad.project" Active="No"/>
   <Project Name="delay" Path="delay/delay.project" Active="No"/>
   <Project Name="asciidisplay" Path="asciidisplay/asciidisplay.project" Active="No"/>
-  <Project Name="graphicdislpay" Path="graphicdislpay/graphicdislpay.project" Active="Yes"/>
+  <Project Name="graphicdislpay" Path="graphicdislpay/graphicdislpay.project" Active="No"/>
+  <Project Name="autopong" Path="autopong/autopong.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment>GccArmDir = $(CodeliteDir)/tools/gcc-arm</Environment>
@@ -13,6 +14,7 @@
       <Project Name="delay" ConfigName="Debug"/>
       <Project Name="asciidisplay" ConfigName="Debug"/>
       <Project Name="graphicdislpay" ConfigName="Debug"/>
+      <Project Name="autopong" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -21,6 +23,7 @@
       <Project Name="delay" ConfigName="Release"/>
       <Project Name="asciidisplay" ConfigName="Release"/>
       <Project Name="graphicdislpay" ConfigName="Release"/>
+      <Project Name="autopong" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
