@@ -1,6 +1,6 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
-
+#include "graphics.h";
 typedef struct tPoint{
     unsigned char x;
     unsigned char y;
@@ -54,14 +54,39 @@ void set_object_speed (POBJECT o, int speedx, int speedy){
 }
 
 void draw_object(POBJECT o) {
+    for (int i = 0; i< o->geo->numpoints; i++){
+        pixel(o->posx+o->geo->px[i].x,o->posy+o->geo->px[i].y,1);
+    }
 }
 
 void move_object(POBJECT o){
+    clear_object(o);
+    o->posx = o->posx+o->dirx;
+    o->posy = o->posy+o->diry;
+    if (o->posx < 1){
+        o->dirx *= -1;
+        o->posx = 1;
+    }
+    if (o->posx + o->geo->sizex > 128){
+        o->dirx *= -1;
+        o->posx = 128 - o->geo->sizex;
+    }
     
+    if (o->posy < 1){
+        o->diry *= -1;
+        o->posy = 1;
+    }
+    if (o->posy + o->geo->sizey > 64){
+        o->diry *= -1;
+        o->posy = 64 - o->geo->sizey;
+    }
+    draw_object(o);
 }
 
 void clear_object(POBJECT o){
-    
+    for (int i = 0; i< o->geo->numpoints; i++){
+        pixel(o->posx+o->geo->px[i].x,o->posy+o->geo->px[i].y,0);
+    }
 }
 
 #endif // GEMOETRY_H

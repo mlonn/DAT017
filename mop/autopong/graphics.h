@@ -1,5 +1,5 @@
-#ifndef GRAPICHS_H
-#define GRAPICS_H
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
 #include "gpio.h"
 #define B_E 0x40 // Enable
 #define B_RST 0x20 // Reset

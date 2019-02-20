@@ -39,18 +39,12 @@ void main(void) {
 #ifndef SIMULATOR
     graphic_clear_screen();
 #endif
-    for(i = 0; i < 128; i++ ){
-		pixel(i, 10, 1);
-	}
-	for(i = 0; i < 64; i++){
-		pixel(10, i, 1);
-	}
-	delay_milli(500);
-	for(i = 0; i < 128; i++){
-		pixel(i, 10, 0);
-	}
-	for(i = 0; i < 64; i++){
-		pixel(10, i, 0);
-	}
+    POBJECT p = &ball;
+    p->set_speed(p,-1,2);
+    while(1){
+        p->move(p);
+        //delay_milli(40);
+    }
+    
 }
 

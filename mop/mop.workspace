@@ -15,6 +15,7 @@
       <Project Name="asciidisplay" ConfigName="Debug"/>
       <Project Name="graphicdislpay" ConfigName="Debug"/>
       <Project Name="autopong" ConfigName="Debug"/>
+      <Project Name="lab2_1" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -24,6 +25,7 @@
       <Project Name="asciidisplay" ConfigName="Release"/>
       <Project Name="graphicdislpay" ConfigName="Release"/>
       <Project Name="autopong" ConfigName="Release"/>
+      <Project Name="lab2_1" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

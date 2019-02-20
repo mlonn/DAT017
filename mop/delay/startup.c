@@ -67,15 +67,20 @@ __asm volatile(
 	) ;
 }
 void app_init(){
-        GPIO_E.moder = 0x5555;
+        
+#ifdef USBDM
+	*((unsigned long *)0x40023830)  = 0x18;
+	__asm volatile( " LDR R0,=0x08000209\n BLX R0 \n");
+#endif
+	GPIO_E.moder = 0x5555;
 }
 void main(void)
 {
     app_init();
     while(1){
-        GPIO_E.odrLow = 0xFF;
-        delay_milli(500);
         GPIO_E.odrLow = 0x00;
+        delay_milli(500);
+        GPIO_E.odrLow = 0xFF;
         delay_milli(500);
     }
 }

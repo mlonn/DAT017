@@ -33,11 +33,14 @@ __asm volatile(
 	) ;
 }
 void app_init(void) {
-
+	/* starta klockor port D och E */
+#ifdef USBDM
+	 *( (unsigned long *) 0x40023830) = 0x18;
+#endif
     GPIO_D.moder = 0x55005555; // 0101 0101 0000 0000 0101 0101 0101 0101
-    GPIO_D.otyper &= 0xFF000000; // Nollställer bit 8-15
-    GPIO_D.pupdr &= 0xFF00FFFF; // Nollställer de bitar som ska sättas
-    GPIO_D.pupdr |= 0x00550000;
+  //  GPIO_D.otyper &= 0xFF000000; // Nollställer bit 8-15
+   // GPIO_D.pupdr &= 0xFF00FFFF; // Nollställer de bitar som ska sättas
+   // GPIO_D.pupdr |= 0x00550000;
 }
 
 void activateRow(unsigned int row ){
