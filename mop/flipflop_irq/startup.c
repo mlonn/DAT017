@@ -19,8 +19,8 @@ __asm volatile(
 
 #define EXTI 0x40013C00
 #define EXTI_IMR ((volatile unsigned int*)(EXTI))
-#define EXTI_RTSR ((volatile unsigned int*)(EXTI) + 0x8)
-#define EXTI_PR ((volatile unsigned int*)(EXTI) + 0x14)
+#define EXTI_RTSR ((volatile unsigned int*)(EXTI + 0x8))
+#define EXTI_PR ((volatile unsigned int*)(EXTI + 0x14))
 
 #define NVIC 0xE000E100
 #define NVIC_ISER0 ((volatile unsigned int*)(NVIC))
@@ -37,15 +37,15 @@ void app_init(void) {
     /*SET OUTPUT FOR HEX DISP*/
     GPIO_D.moder = 0x00005555;
     /*SET INPUT FOR FLIPFLOP*/
-    GPIO_E.moder = 0x0;
+    GPIO_E.moder = 0;
     
     /*Nollställ fält*/
-    *SYSCFG_EXTICR1 &= 0x0FFF;
+    *SYSCFG_EXTICR1 &= 0xFFFF0FFF;
     /*PE3 -> EXTI3*/
     *SYSCFG_EXTICR1 |= 0x4000;
     
-    *EXTI_IMR |= 4;
-    *EXTI_RTSR |= 4;
+    *EXTI_IMR |= 8;
+    *EXTI_RTSR |= 8;
     
     *((void (**)(void) ) 0x2001C064 )  = irq_handler;
     
@@ -57,8 +57,6 @@ void main(void)
 {
     app_init();
     while(1){
-        GPIO_D.odrLow = count;
-        GPIO_D.odrLow = count;
         GPIO_D.odrLow = count;
     }
 }
