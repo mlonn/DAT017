@@ -1,8 +1,8 @@
 .PHONY: clean All
 
 All:
-	@echo "----------Building project:[ systick_irq - Debug ]----------"
-	@cd "getsetptr" && "$(MAKE)" -f  "systick_irq.mk" && "$(MAKE)" -f  "systick_irq.mk" PostBuild
+	@echo "----------Building project:[ keypong - Debug ]----------"
+	@cd "keypong" && "$(MAKE)" -f  "keypong.mk" && "$(MAKE)" -f  "keypong.mk" PostBuild
 clean:
-	@echo "----------Cleaning project:[ systick_irq - Debug ]----------"
-	@cd "getsetptr" && "$(MAKE)" -f  "systick_irq.mk" clean
+	@echo "----------Cleaning project:[ keypong - Debug ]----------"
+	@cd "keypong" && "$(MAKE)" -f  "keypong.mk" clean

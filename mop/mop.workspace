@@ -6,7 +6,8 @@
   <Project Name="asciidisplay" Path="asciidisplay/asciidisplay.project" Active="No"/>
   <Project Name="graphicdislpay" Path="graphicdislpay/graphicdislpay.project" Active="No"/>
   <Project Name="autopong" Path="autopong/autopong.project" Active="No"/>
-  <Project Name="systick_irq" Path="getsetptr/getsetptr.project" Active="Yes"/>
+  <Project Name="systick_irq" Path="systick_irq/systick_irq.project" Active="No"/>
+  <Project Name="keypong" Path="keypong/keypong.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment>GccArmDir = $(CodeliteDir)/tools/gcc-arm</Environment>
@@ -18,6 +19,7 @@
       <Project Name="autopong" ConfigName="Debug"/>
       <Project Name="lab2_1" ConfigName="Debug"/>
       <Project Name="systick_irq" ConfigName="Debug"/>
+      <Project Name="keypong" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -29,6 +31,7 @@
       <Project Name="autopong" ConfigName="Release"/>
       <Project Name="lab2_1" ConfigName="Release"/>
       <Project Name="systick_irq" ConfigName="Release"/>
+      <Project Name="keypong" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

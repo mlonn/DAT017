@@ -6,7 +6,7 @@
 ProjectName            :=systick_irq
 ConfigurationName      :=Debug
 WorkspacePath          :=/Users/krulla/chalmers/dat017/mop
-ProjectPath            :=/Users/krulla/chalmers/dat017/mop/getsetptr
+ProjectPath            :=/Users/krulla/chalmers/dat017/mop/systick_irq
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
@@ -103,7 +103,7 @@ PreBuild:
 ## Objects
 ##
 $(IntermediateDirectory)/startup.c$(ObjectSuffix): startup.c $(IntermediateDirectory)/startup.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/Users/krulla/chalmers/dat017/mop/getsetptr/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "/Users/krulla/chalmers/dat017/mop/systick_irq/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/startup.c$(DependSuffix): startup.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/startup.c$(ObjectSuffix) -MF$(IntermediateDirectory)/startup.c$(DependSuffix) -MM startup.c
 
