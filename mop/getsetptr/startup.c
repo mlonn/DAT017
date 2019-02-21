@@ -18,6 +18,7 @@ __asm volatile(
 
 void systick_irq_handler( void ){
     *STK_CTRL = 0;
+    delay_count -= 1;
     if (delay_count > 0) {
         delay_1micro();
     } else {
