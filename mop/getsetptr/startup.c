@@ -16,21 +16,21 @@ __asm volatile(
 	) ;
 }
 
-#ifdef SIMULATOR
-#define DELAY_COUNT = 100
-#else 
-#define DELAY_COUNT = 1000000
-#endif
-int systick_flag;
+void systick_irq_handler( void ){
+    *STK_CTRL = 0;
+    if (delay_count > 0) {
+        delay_1micro();
+    } else {
+        systick_flag = 1;
+    }
+}
 
 void init_app( void ) {
     GPIO_D.moder = 0x00005555;
-    *((void (**)(void) ) 0x2001C03C ) =
+    *((void (**)(void) ) 0x2001C03C )  = systick_irq_handler;
 }
 
-void systick_irq_handler( void ){
-    
-}
+
 
 void main(void)
 {

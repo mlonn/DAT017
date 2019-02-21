@@ -5,8 +5,8 @@
   <Project Name="delay" Path="delay/delay.project" Active="No"/>
   <Project Name="asciidisplay" Path="asciidisplay/asciidisplay.project" Active="No"/>
   <Project Name="graphicdislpay" Path="graphicdislpay/graphicdislpay.project" Active="No"/>
-  <Project Name="autopong" Path="autopong/autopong.project" Active="Yes"/>
-  <Project Name="systick_irq" Path="getsetptr/getsetptr.project" Active="No"/>
+  <Project Name="autopong" Path="autopong/autopong.project" Active="No"/>
+  <Project Name="systick_irq" Path="getsetptr/getsetptr.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment>GccArmDir = $(CodeliteDir)/tools/gcc-arm</Environment>
