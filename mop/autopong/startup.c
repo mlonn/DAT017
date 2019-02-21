@@ -2,7 +2,6 @@
  * 	startup.c
  *
  */
-#include <stdint.h>
 #include "geometry.h"
 #include "delay.h"
 #include "gpio.h"
@@ -11,7 +10,7 @@
 static OBJECT ball = {
     &ball_geometry, // geometry for a ball
     0,0, // move direction (x,y)
-    1,1, // position (x,y)
+    10,10, // position (x,y)
     draw_object, // draw method
     move_object, // move method
     set_object_speed // set-speed method
@@ -40,7 +39,7 @@ void main(void) {
     graphic_clear_screen();
 #endif
     POBJECT p = &ball;
-    p->set_speed(p,-1,2);
+    p->set_speed(p,-4,-4);
     while(1){
         p->move(p);
         //delay_milli(40);
