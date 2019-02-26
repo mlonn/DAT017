@@ -174,10 +174,10 @@ void delay_500ns( void) {
     delay_250ns();
 }
 void delay_micro(unsigned int us) {
-//#ifdef SIMULATOR
+#ifdef SIMULATOR
     us = us / 1000;
     us++;
-//#endif
+#endif
     while( us > 0 ) {
         delay_250ns();
         delay_250ns();
@@ -187,10 +187,10 @@ void delay_micro(unsigned int us) {
     }
 }
 void delay_milli(unsigned int ms){
-//#ifdef SIMULATOR
+#ifdef SIMULATOR
     ms = ms / 1000;
     ms++;
-//#endif
+#endif
     while( ms > 0 ) {
         delay_micro(1000);
         ms--;
@@ -261,7 +261,12 @@ void pixel(int x, int y, int set) {
     }
     graphic_write_data(mask, controller);
 }
+
 void init_app() {
+#ifdef USBDM
+	 *( (unsigned long *) 0x40023830) = 0x18;
+	 __asm volatile( " LDR R0,=0x08000209\n BLX R0 \n");
+#endif
     GPIO_E.moder = 0x55555555;
 }
 void main(void) {
@@ -271,6 +276,9 @@ void main(void) {
 #ifndef SIMULATOR
     graphic_clear_screen();
 #endif
+	graphic_write_command(LCD_SET_ADD | 10, B_CS1|B_CS2);
+	graphic_write_command(LCD_SET_PAGE | 1, B_CS1|B_CS2);
+	graphic_write_data(0xFF, B_CS1|B_CS2);
     for(i = 0; i < 128; i++ ){
 		pixel(i, 10, 1);
 	}

@@ -7,8 +7,8 @@
   <Project Name="graphicdislpay" Path="graphicdislpay/graphicdislpay.project" Active="No"/>
   <Project Name="autopong" Path="autopong/autopong.project" Active="No"/>
   <Project Name="systick_irq" Path="systick_irq/systick_irq.project" Active="No"/>
-  <Project Name="keypong" Path="keypong/keypong.project" Active="No"/>
-  <Project Name="flipflop_irq" Path="flipflop_irq/flipflop_irq.project" Active="Yes"/>
+  <Project Name="keypong" Path="keypong/keypong.project" Active="Yes"/>
+  <Project Name="flipflop_irq" Path="flipflop_irq/flipflop_irq.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment>GccArmDir = $(CodeliteDir)/tools/gcc-arm</Environment>

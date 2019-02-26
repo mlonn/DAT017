@@ -60,7 +60,7 @@ void draw_object(POBJECT o) {
 }
 
 void move_object(POBJECT o){
-    clear_object(o);
+    //clear_object(o);
     o->posx = o->posx+o->dirx;
     o->posy = o->posy+o->diry;
     if (o->posx < 1){

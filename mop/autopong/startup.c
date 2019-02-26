@@ -29,6 +29,10 @@ __asm volatile(
 }
 
 void init_app() {
+#ifdef USBDM
+	 *( (unsigned long *) 0x40023830) = 0x18;
+	 __asm volatile( " LDR R0,=0x08000209\n BLX R0 \n");
+#endif
     GPIO_E.moder = 0x55555555;
 }
 void main(void) {
