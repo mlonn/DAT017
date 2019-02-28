@@ -26,17 +26,17 @@
    2:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****  * 	startup.c
    3:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****  *
    4:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****  */
-   5:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****  #include "gpio.h"
-   6:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void startup(void) __attribute__((naked)) __attribute__((section (".start_section")) );
+   5:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #include "gpio.h"
+   6:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void startup(void) __attribute__((naked)) __attribute__((section(".start_section")));
    7:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
-   8:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void startup ( void )
+   8:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void startup(void)
    9:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** {
   26              		.loc 1 9 0
   27              		.cfi_startproc
   28              		@ Naked Function: prologue and epilogue provided by programmer.
   29              		@ args = 0, pretend = 0, frame = 0
   30              		@ frame_needed = 1, uses_anonymous_args = 0
-  10:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** __asm volatile(
+  10:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     __asm volatile(" LDR R0,=0x2001C000\n" /* set stack */
   31              		.loc 1 10 0
   32              		.syntax divided
   33              	@ 10 "C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack/startup.c" 1
@@ -46,13 +46,12 @@
   37 0008 FEE7     	.L1: B .L1
   38              	
   39              	@ 0 "" 2
-  11:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	" LDR R0,=0x2001C000\n"		/* set stack */
-  12:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	" MOV SP,R0\n"
-  13:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	" BL main\n"				/* call main */
-  14:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	".L1: B .L1\n"				/* never return */
-  15:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	) ;
-  16:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** }
-  40              		.loc 1 16 0
+  11:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****                    " MOV SP,R0\n"
+  12:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****                    " BL main\n"   /* call main */
+  13:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****                    ".L1: B .L1\n" /* never return */
+  14:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     );
+  15:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** }
+  40              		.loc 1 15 0
   41              		.thumb
   42              		.syntax unified
   43 000a C046     		nop
@@ -68,35 +67,36 @@
   54              		.fpu softvfp
   56              	irq_handler:
   57              	.LFB1:
-  17:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define SYSCFG 0x40013800
-  18:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define SYSCFG_EXTICR1 ((volatile unsigned int*)(SYSCFG + 0x8))
-  19:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
-  20:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI 0x40013C00
-  21:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI_IMR ((volatile unsigned int*)(EXTI))
-  22:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI_RTSR ((volatile unsigned int*)(EXTI + 0x8))
-  23:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI_PR ((volatile unsigned int*)(EXTI + 0x14))
-  24:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
-  25:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC 0xE000E100
-  26:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_ISER0 ((volatile unsigned int*)(NVIC))
-  27:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
-  28:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_EXTI0_IRQ_BPOS (1<<6)
-  29:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_EXTI1_IRQ_BPOS (1<<7)
-  30:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_EXTI2_IRQ_BPOS (1<<8)
-  31:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_EXTI3_IRQ_BPOS (1<<9)
-  32:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
-  33:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI0_IRQ_BPOS 1
-  34:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI1_IRQ_BPOS 2
-  35:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI2_IRQ_BPOS 4
-  36:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI3_IRQ_BPOS 8
-  37:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
-  38:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define IRQVEC 0x2001C000
-  39:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI0_IRQVEC ((void (**)(void) ) (IRQVEC + 0x58) )
-  40:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI1_IRQVEC ((void (**)(void) ) (IRQVEC + 0x5C) )
-  41:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI2_IRQVEC ((void (**)(void) ) (IRQVEC + 0x60) )
-  42:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI3_IRQVEC ((void (**)(void) ) (IRQVEC + 0x64) )
-  43:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
-  44:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** int count;
-  45:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void irq_handler(void) {
+  16:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define SYSCFG 0x40013800
+  17:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define SYSCFG_EXTICR1 ((volatile unsigned int*)(SYSCFG + 0x8))
+  18:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  19:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI 0x40013C00
+  20:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI_IMR ((volatile unsigned int*)(EXTI))
+  21:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI_RTSR ((volatile unsigned int*)(EXTI + 0x8))
+  22:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI_PR ((volatile unsigned int*)(EXTI + 0x14))
+  23:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  24:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC 0xE000E100
+  25:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_ISER0 ((volatile unsigned int*)(NVIC))
+  26:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  27:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_EXTI0_IRQ_BPOS (1 << 6)
+  28:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_EXTI1_IRQ_BPOS (1 << 7)
+  29:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_EXTI2_IRQ_BPOS (1 << 8)
+  30:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define NVIC_EXTI3_IRQ_BPOS (1 << 9)
+  31:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  32:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI0_IRQ_BPOS 1
+  33:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI1_IRQ_BPOS 2
+  34:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI2_IRQ_BPOS 4
+  35:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI3_IRQ_BPOS 8
+  36:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  37:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define IRQVEC 0x2001C000
+  38:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI0_IRQVEC ((void (**)(void))(IRQVEC + 0x58))
+  39:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI1_IRQVEC ((void (**)(void))(IRQVEC + 0x5C))
+  40:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI2_IRQVEC ((void (**)(void))(IRQVEC + 0x60))
+  41:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** #define EXTI3_IRQVEC ((void (**)(void))(IRQVEC + 0x64))
+  42:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  43:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** int count;
+  44:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void irq_handler(void)
+  45:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** {
   58              		.loc 1 45 0
   59              		.cfi_startproc
   60              		@ args = 0, pretend = 0, frame = 0
@@ -107,15 +107,15 @@
   65              		.cfi_offset 14, -4
   66 0002 00AF     		add	r7, sp, #0
   67              		.cfi_def_cfa_register 7
-  46:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     
-  47:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     if( (*EXTI_PR & EXTI3_IRQ_BPOS) != 0 ) {
+  46:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  47:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     if((*EXTI_PR & EXTI3_IRQ_BPOS) != 0) {
   68              		.loc 1 47 0
   69 0004 314B     		ldr	r3, .L7
   70 0006 1B68     		ldr	r3, [r3]
   71 0008 0822     		movs	r2, #8
   72 000a 1340     		ands	r3, r2
   73 000c 5BD0     		beq	.L6
-  48:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 		*EXTI_PR |= EXTI3_IRQ_BPOS;
+  48:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	*EXTI_PR |= EXTI3_IRQ_BPOS;
   74              		.loc 1 48 0
   75 000e 2F4B     		ldr	r3, .L7
   76 0010 1A68     		ldr	r2, [r3]
@@ -123,8 +123,8 @@
   78 0014 0821     		movs	r1, #8
   79 0016 0A43     		orrs	r2, r1
   80 0018 1A60     		str	r2, [r3]
-  49:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 		
-  50:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 		if(GPIO_E.idrLow & 1){
+  49:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  50:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	if(GPIO_E.idrLow & 1) {
   81              		.loc 1 50 0
   82 001a 2D4B     		ldr	r3, .L7+4
   83 001c 1B7C     		ldrb	r3, [r3, #16]
@@ -133,8 +133,8 @@
   86 0022 0123     		movs	r3, #1
   87 0024 1340     		ands	r3, r2
   88 0026 15D0     		beq	.L4
-  51:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			
-  52:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_E.odrLow |= 0x10;
+  51:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  52:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_E.odrLow |= 0x10;
   89              		.loc 1 52 0
   90 0028 294B     		ldr	r3, .L7+4
   91 002a 1B7D     		ldrb	r3, [r3, #20]
@@ -144,7 +144,7 @@
   95 0032 0B43     		orrs	r3, r1
   96 0034 DBB2     		uxtb	r3, r3
   97 0036 1375     		strb	r3, [r2, #20]
-  53:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_E.odrLow &= 0xEF;
+  53:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_E.odrLow &= 0xEF;
   98              		.loc 1 53 0
   99 0038 254B     		ldr	r3, .L7+4
  100 003a 1B7D     		ldrb	r3, [r3, #20]
@@ -154,33 +154,32 @@
  104 0042 8B43     		bics	r3, r1
  105 0044 DBB2     		uxtb	r3, r3
  106 0046 1375     		strb	r3, [r2, #20]
-  54:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			count++;
+  54:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    count++;
  107              		.loc 1 54 0
  108 0048 224B     		ldr	r3, .L7+8
  109 004a 1B68     		ldr	r3, [r3]
  110 004c 5A1C     		adds	r2, r3, #1
  111 004e 214B     		ldr	r3, .L7+8
  112 0050 1A60     		str	r2, [r3]
-  55:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 		
-  56:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 		} else if((GPIO_E.idrLow & 2) != 0){
-  57:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			
-  58:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_E.odrLow |= 0x20;
-  59:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_E.odrLow &= 0xDF;
-  60:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			count = 0;
+  55:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  56:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	} else if((GPIO_E.idrLow & 2) != 0) {
+  57:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  58:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_E.odrLow |= 0x20;
+  59:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_E.odrLow &= 0xDF;
+  60:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    count = 0;
   61:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
-  62:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 		} else if((GPIO_E.idrLow & 4) != 0){
-  63:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			
-  64:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_E.odrLow |= 0x40;
-  65:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_E.odrLow &= 0xBF;
-  66:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_D.odrHigh  = ~GPIO_D.odrHigh;
-  67:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 		}
-  68:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	}
-  69:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     
-  70:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** }
- 113              		.loc 1 70 0
+  62:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	} else if((GPIO_E.idrLow & 4) != 0) {
+  63:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  64:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_E.odrLow |= 0x40;
+  65:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_E.odrLow &= 0xBF;
+  66:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_D.odrHigh = ~GPIO_D.odrHigh;
+  67:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	}
+  68:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     }
+  69:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** }
+ 113              		.loc 1 69 0
  114 0052 38E0     		b	.L6
  115              	.L4:
-  56:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			
+  56:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
  116              		.loc 1 56 0
  117 0054 1E4B     		ldr	r3, .L7+4
  118 0056 1B7C     		ldrb	r3, [r3, #16]
@@ -189,7 +188,7 @@
  121 005c 0223     		movs	r3, #2
  122 005e 1340     		ands	r3, r2
  123 0060 13D0     		beq	.L5
-  58:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_E.odrLow &= 0xDF;
+  58:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_E.odrLow &= 0xDF;
  124              		.loc 1 58 0
  125 0062 1B4B     		ldr	r3, .L7+4
  126 0064 1B7D     		ldrb	r3, [r3, #20]
@@ -199,7 +198,7 @@
  130 006c 0B43     		orrs	r3, r1
  131 006e DBB2     		uxtb	r3, r3
  132 0070 1375     		strb	r3, [r2, #20]
-  59:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			count = 0;
+  59:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    count = 0;
  133              		.loc 1 59 0
  134 0072 174B     		ldr	r3, .L7+4
  135 0074 1B7D     		ldrb	r3, [r3, #20]
@@ -214,10 +213,10 @@
  143 0082 144B     		ldr	r3, .L7+8
  144 0084 0022     		movs	r2, #0
  145 0086 1A60     		str	r2, [r3]
- 146              		.loc 1 70 0
+ 146              		.loc 1 69 0
  147 0088 1DE0     		b	.L6
  148              	.L5:
-  62:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			
+  62:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
  149              		.loc 1 62 0
  150 008a 114B     		ldr	r3, .L7+4
  151 008c 1B7C     		ldrb	r3, [r3, #16]
@@ -226,7 +225,7 @@
  154 0092 0423     		movs	r3, #4
  155 0094 1340     		ands	r3, r2
  156 0096 16D0     		beq	.L6
-  64:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_E.odrLow &= 0xBF;
+  64:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_E.odrLow &= 0xBF;
  157              		.loc 1 64 0
  158 0098 0D4B     		ldr	r3, .L7+4
  159 009a 1B7D     		ldrb	r3, [r3, #20]
@@ -236,7 +235,7 @@
  163 00a2 0B43     		orrs	r3, r1
  164 00a4 DBB2     		uxtb	r3, r3
  165 00a6 1375     		strb	r3, [r2, #20]
-  65:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 			GPIO_D.odrHigh  = ~GPIO_D.odrHigh;
+  65:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	    GPIO_D.odrHigh = ~GPIO_D.odrHigh;
  166              		.loc 1 65 0
  167 00a8 094B     		ldr	r3, .L7+4
  168 00aa 1B7D     		ldrb	r3, [r3, #20]
@@ -246,7 +245,7 @@
  172 00b2 8B43     		bics	r3, r1
  173 00b4 DBB2     		uxtb	r3, r3
  174 00b6 1375     		strb	r3, [r2, #20]
-  66:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 		}
+  66:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	}
  175              		.loc 1 66 0
  176 00b8 074B     		ldr	r3, .L7+12
  177 00ba 5B7D     		ldrb	r3, [r3, #21]
@@ -256,7 +255,7 @@
  181 00c2 DBB2     		uxtb	r3, r3
  182 00c4 5375     		strb	r3, [r2, #21]
  183              	.L6:
- 184              		.loc 1 70 0
+ 184              		.loc 1 69 0
  185 00c6 C046     		nop
  186 00c8 BD46     		mov	sp, r7
  187              		@ sp needed
@@ -278,8 +277,9 @@
  204              		.fpu softvfp
  206              	app_init:
  207              	.LFB2:
-  71:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
-  72:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void app_init(void) {
+  70:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  71:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void app_init(void)
+  72:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** {
  208              		.loc 1 72 0
  209              		.cfi_startproc
  210              		@ args = 0, pretend = 0, frame = 0
@@ -303,7 +303,7 @@
  224 00e8 AA22     		movs	r2, #170
  225 00ea D201     		lsls	r2, r2, #7
  226 00ec 1A60     		str	r2, [r3]
-  77:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     
+  77:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
   78:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     /*Nollställ fält*/
   79:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     *SYSCFG_EXTICR1 &= 0x0FFF;
  227              		.loc 1 79 0
@@ -323,7 +323,7 @@
  239 0102 C901     		lsls	r1, r1, #7
  240 0104 0A43     		orrs	r2, r1
  241 0106 1A60     		str	r2, [r3]
-  82:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     
+  82:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
   83:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     /*Ac*/
   84:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     *EXTI_IMR |= 0xF;
  242              		.loc 1 84 0
@@ -341,16 +341,15 @@
  253 011a 0F21     		movs	r1, #15
  254 011c 0A43     		orrs	r2, r1
  255 011e 1A60     		str	r2, [r3]
-  86:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	
-  87:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     
-  88:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     *EXTI3_IRQVEC  = irq_handler;
- 256              		.loc 1 88 0
+  86:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  87:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     *EXTI3_IRQVEC = irq_handler;
+ 256              		.loc 1 87 0
  257 0120 0D4B     		ldr	r3, .L10+24
  258 0122 0E4A     		ldr	r2, .L10+28
  259 0124 1A60     		str	r2, [r3]
-  89:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     
-  90:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     *NVIC_ISER0 |= NVIC_EXTI3_IRQ_BPOS;
- 260              		.loc 1 90 0
+  88:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  89:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     *NVIC_ISER0 |= NVIC_EXTI3_IRQ_BPOS;
+ 260              		.loc 1 89 0
  261 0126 0E4B     		ldr	r3, .L10+32
  262 0128 1A68     		ldr	r2, [r3]
  263 012a 0D4B     		ldr	r3, .L10+32
@@ -358,14 +357,14 @@
  265 012e 8900     		lsls	r1, r1, #2
  266 0130 0A43     		orrs	r2, r1
  267 0132 1A60     		str	r2, [r3]
-  91:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     
-  92:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     count = 0;
- 268              		.loc 1 92 0
+  90:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 
+  91:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     count = 0;
+ 268              		.loc 1 91 0
  269 0134 0B4B     		ldr	r3, .L10+36
  270 0136 0022     		movs	r2, #0
  271 0138 1A60     		str	r2, [r3]
-  93:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** }
- 272              		.loc 1 93 0
+  92:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** }
+ 272              		.loc 1 92 0
  273 013a C046     		nop
  274 013c BD46     		mov	sp, r7
  275              		@ sp needed
@@ -393,9 +392,9 @@
  298              		.fpu softvfp
  300              	main:
  301              	.LFB3:
-  94:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void main(void)
-  95:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** {
- 302              		.loc 1 95 0
+  93:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** void main(void)
+  94:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** {
+ 302              		.loc 1 94 0
  303              		.cfi_startproc
  304              		@ args = 0, pretend = 0, frame = 0
  305              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -405,13 +404,13 @@
  309              		.cfi_offset 14, -4
  310 016a 00AF     		add	r7, sp, #0
  311              		.cfi_def_cfa_register 7
-  96:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     app_init();
- 312              		.loc 1 96 0
+  95:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     app_init();
+ 312              		.loc 1 95 0
  313 016c FFF7FEFF 		bl	app_init
  314              	.L13:
-  97:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     while(1){
-  98:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****         GPIO_D.odrLow = count;
- 315              		.loc 1 98 0 discriminator 1
+  96:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c ****     while(1) {
+  97:C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack\startup.c **** 	GPIO_D.odrLow = count;
+ 315              		.loc 1 97 0 discriminator 1
  316 0170 024B     		ldr	r3, .L14
  317 0172 1A68     		ldr	r2, [r3]
  318 0174 024B     		ldr	r3, .L14+4
