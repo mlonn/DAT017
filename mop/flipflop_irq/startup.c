@@ -24,13 +24,31 @@ __asm volatile(
 
 #define NVIC 0xE000E100
 #define NVIC_ISER0 ((volatile unsigned int*)(NVIC))
+
+#define NVIC_EXTI0_IRQ_BPOS (1<<6)
+#define NVIC_EXTI1_IRQ_BPOS (1<<7)
+#define NVIC_EXTI2_IRQ_BPOS (1<<8)
 #define NVIC_EXTI3_IRQ_BPOS (1<<9)
+
+#define EXTI0_IRQ_BPOS 1
+#define EXTI1_IRQ_BPOS 2
+#define EXTI2_IRQ_BPOS 4
+#define EXTI3_IRQ_BPOS 8
+
+#define IRQVEC 0x2001C000
+#define EXTI0_IRQVEC ((void (**)(void) ) (IRQVEC + 0x58) )
+#define EXTI1_IRQVEC ((void (**)(void) ) (IRQVEC + 0x5C) )
+#define EXTI2_IRQVEC ((void (**)(void) ) (IRQVEC + 0x60) )
+#define EXTI3_IRQVEC ((void (**)(void) ) (IRQVEC + 0x64) )
+
 int count;
 void irq_handler(void) {
-    count++;
-    if( (*EXTI_PR & NVIC_EXTI3_IRQ_BPOS) != 0 ) {
-        *EXTI_PR |= NVIC_EXTI3_IRQ_BPOS;
+    
+    if( (*EXTI_PR & EXTI3_IRQ_BPOS) != 0 ) {
+        *EXTI_PR |= EXTI3_IRQ_BPOS;
+        count++;
     }
+    
 }
 
 void app_init(void) {
@@ -40,14 +58,15 @@ void app_init(void) {
     GPIO_E.moder = 0;
     
     /*Nollställ fält*/
-    *SYSCFG_EXTICR1 &= 0xFFFF0FFF;
+    *SYSCFG_EXTICR1 &= 0x0FFF;
     /*PE3 -> EXTI3*/
     *SYSCFG_EXTICR1 |= 0x4000;
     
-    *EXTI_IMR |= 8;
-    *EXTI_RTSR |= 8;
+    /*Ac*/
+    *EXTI_IMR |= EXTI3_IRQ_BPOS;
+    *EXTI_RTSR |= EXTI3_IRQ_BPOS;
     
-    *((void (**)(void) ) 0x2001C064 )  = irq_handler;
+    *EXTI3_IRQVEC  = irq_handler;
     
     *NVIC_ISER0 |= NVIC_EXTI3_IRQ_BPOS;
     
