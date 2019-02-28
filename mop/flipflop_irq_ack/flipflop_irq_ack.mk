@@ -3,10 +3,10 @@
 ## any manual changes will be erased      
 ##
 ## Debug
-ProjectName            :=flipflop_irq
+ProjectName            :=flipflop_irq_ack
 ConfigurationName      :=Debug
 WorkspacePath          :=C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop
-ProjectPath            :=C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq
+ProjectPath            :=C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
@@ -32,7 +32,7 @@ Preprocessors          :=$(PreprocessorSwitch)SIMULATOR
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
-ObjectsFileList        :="flipflop_irq.txt"
+ObjectsFileList        :="flipflop_irq_ack.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=makedir
 RcCmpOptions           := 
@@ -53,7 +53,7 @@ AR       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-ar.exe rcu
 CXX      := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-g++.exe
 CC       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-gcc.exe
 CXXFLAGS :=  -g -O0 -W $(Preprocessors)
-CFLAGS   :=  -g -O0 -w -mthumb -march=armv6-m  -mfloat-abi=soft -std=c99 $(Preprocessors)
+CFLAGS   :=  -Wa,-adhln=test.s -g -O0 -w -mthumb -march=armv6-m  -mfloat-abi=soft -std=c99 -mthumb -march=armv6-m $(Preprocessors)
 ASFLAGS  := 
 AS       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-as.exe
 
@@ -87,8 +87,8 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 
 PostBuild:
 	@echo Executing Post Build commands ...
-	C:\cseapp\CodeLite/tools/gcc-arm/arm-none-eabi/bin/objcopy -S -O srec  ./Debug/flipflop_irq.elf ./Debug/flipflop_irq.s19
-	C:\cseapp\CodeLite/tools/gcc-arm/arm-none-eabi/bin/objdump -D -S ./Debug/flipflop_irq.elf > ./Debug/flipflop_irq.dass
+	arm-none-eabi-objcopy -S -O srec  ./Debug/flipflop_irq_ack.elf ./Debug/flipflop_irq_ack.s19
+	arm-none-eabi-objdump -D -S ./Debug/flipflop_irq_ack.elf > ./Debug/flipflop_irq_ack.dass
 	@echo Done
 
 MakeIntermediateDirs:
@@ -105,7 +105,7 @@ PreBuild:
 ## Objects
 ##
 $(IntermediateDirectory)/startup.c$(ObjectSuffix): startup.c $(IntermediateDirectory)/startup.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_ack/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/startup.c$(DependSuffix): startup.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/startup.c$(ObjectSuffix) -MF$(IntermediateDirectory)/startup.c$(DependSuffix) -MM startup.c
 
