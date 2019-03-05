@@ -5,15 +5,15 @@
 ## Debug
 ProjectName            :=flipflop_irq_vectored
 ConfigurationName      :=Debug
-WorkspacePath          :=C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop
-ProjectPath            :=C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_vectored
+WorkspacePath          :=C:/Users/mlonn/Desktop/DAT017/mop
+ProjectPath            :=Z:/DAT017/mop/flipflop_irq_vectored
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=adamt
-Date                   :=28/02/2019
+User                   :=mlonn
+Date                   :=05/03/2019
 CodeLitePath           :=C:/cseapp/CodeLite
 LinkerName             :=$(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-g++.exe
 SharedObjectLinkerName :=$(CodeLiteDir)/tools/gcc-arm/arm-none-eabi-g++.exe -shared -fPIC
@@ -105,7 +105,7 @@ PreBuild:
 ## Objects
 ##
 $(IntermediateDirectory)/startup.c$(ObjectSuffix): startup.c $(IntermediateDirectory)/startup.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "C:/Users/adamt/Documents/IT/Maskinprog/DAT017/mop/flipflop_irq_vectored/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "Z:/DAT017/mop/flipflop_irq_vectored/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/startup.c$(DependSuffix): startup.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/startup.c$(ObjectSuffix) -MF$(IntermediateDirectory)/startup.c$(DependSuffix) -MM startup.c
 

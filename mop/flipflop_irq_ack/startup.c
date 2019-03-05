@@ -45,7 +45,7 @@ void irq_handler(void)
 {
 
     if((*EXTI_PR & EXTI3_IRQ_BPOS) != 0) {
-	*EXTI_PR |= EXTI3_IRQ_BPOS;
+		*EXTI_PR |= EXTI3_IRQ_BPOS;
 
 	if(GPIO_E.idrLow & 1) {
 
@@ -70,6 +70,10 @@ void irq_handler(void)
 
 void app_init(void)
 {
+	*( (unsigned long *) 0x40023830) = 0x18;
+	*( (unsigned long *) 0x40023844) |= 0x4000;
+	*( (unsigned long *) 0xE000ED08) = 0x2001C000;
+
     /*SET OUTPUT FOR HEX DISP*/
     GPIO_D.moder = 0x55555555;
     /*SET INPUT FOR FLIPFLOP*/
