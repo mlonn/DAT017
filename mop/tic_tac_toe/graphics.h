@@ -165,6 +165,37 @@ void clear_backBuffer() {
 	}
 }
 
+typedef struct {
+	unsigned char width;
+	unsigned char height;
+	unsigned char* data;
+} sprite;
+static void load_sprite(sprite* s, unsigned char* data, int width, int height) {
+	s->width = width;
+	s->height = height;
+	s->data = data;
+}
+
+void draw_sprite(sprite* s, int x, int y) {
+	int i,j,k, width_in_bytes;
+	if (s->width % 8 == 0){
+		width_in_bytes = s->width / 8;
+	
+	} else {
+		width_in_bytes = s->width / 8 + 1;
+		
+	}
+	for (i = 0; i < s->height; i++) {
+		for (j = 0; j < width_in_bytes; j++) {
+			unsigned char byte = s->data[i * width_in_bytes + j];
+			for (k =0; k < 8; k++) {
+				if (byte & (1 << k))
+				pixel(8 * j + k + x + 1, i + y + 1);
+			}
+		}
+	}
+}
+
 
 void graphic_draw_screen(void) {
 	uint8_t i, j, controller, c;

@@ -28,7 +28,7 @@ void systick_irq_handler( void ){
 
 void init_app( void ) {
     GPIO_D.moder = 0x00005555;
-    *((void (**)(void) ) 0x2001C03C )  = systick_irq_handler;
+    //*((void (**)(void) ) 0x2001C03C )  = systick_irq_handler;
 }
 
 
@@ -40,6 +40,7 @@ void main(void)
     delay(DELAY_COUNT);
     GPIO_D.odrLow = 0xFF;
     while(1) {
+		
         if (systick_flag) {
             break;
         }

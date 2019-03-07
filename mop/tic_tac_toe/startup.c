@@ -7,6 +7,11 @@
 #include "gpio.h"
 #include "graphics.h"
 #include "keypad.h"
+#include "circle.xbm"
+#include "cross.xbm"
+
+#include "big_circle.xbm"
+#include "big_cross.xbm"
 
 static OBJECT ball = {
     &ball_geometry, // geometry for a ball
@@ -59,12 +64,23 @@ void main(void) {
 #ifndef SIMULATOR
     graphic_clear_screen();
 #endif
-    drawgrid();
+	sprite circle = {circle_width, circle_height, circle_bits};
+	sprite cross = {cross_width, cross_height, cross_bits};
+	
+	sprite big_circle = {big_circle_width, big_circle_height, big_circle_bits};
+	sprite big_cross = {big_cross_width, big_cross_height, big_cross_bits};
+	
+    
+	
     while(1){
 		clear_backBuffer();
 		drawgrid();
-		graphic_draw_screen();
+		draw_sprite(&cross,1,1);
+		draw_sprite(&cross,22,22);
+		draw_sprite(&cross,44,44);
 		
+		graphic_draw_screen();
+		delay_milli(40);
 	}
     
 }
