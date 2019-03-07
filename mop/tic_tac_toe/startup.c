@@ -8,8 +8,20 @@
 #include "gpio.h"
 #include "graphics.h"
 #include "keypad.h"
+#include "circle.xbm"
+#include "cross.xbm"
+#include "big_circle.xbm"
+#include "big_cross.xbm"
+
 char grid[9];
 char gameState;
+char turn;
+sprite circle = { circle_width, circle_height, circle_bits };
+sprite cross = { cross_width, cross_height, cross_bits };
+
+sprite big_circle = { big_circle_width, big_circle_height, big_circle_bits };
+sprite big_cross = { big_cross_width, big_cross_height, big_cross_bits };
+
 static OBJECT ball = {
     &ball_geometry,  // geometry for a ball
     0, 0,            // move direction (x,y)
@@ -34,8 +46,53 @@ void drawgrid(void)
     for(i = 0; i < 64; i++) {
         pixel(43, i);
     }
-}
 
+    for(char i = 0; i < 9; i++) {
+        if(grid[i] == 1) {
+            draw_in_grid(1, i);
+        } else if(grid[i] == 2) {
+            draw_in_grid(2, i);
+        }
+    }
+}
+void draw_in_grid(char player, char i)
+{
+    char* s;
+    if(player == 1) {
+        s = &cross;
+    } else {
+        s = &circle;
+    }
+    switch(i) {
+    case 0:
+        draw_sprite(s, 1, 1);
+        break;
+    case 1:
+        draw_sprite(s, 22, 1);
+        break;
+    case 2:
+        draw_sprite(s, 44, 1);
+        break;
+    case 3:
+        draw_sprite(s, 1, 22);
+        break;
+    case 4:
+        draw_sprite(s, 22, 22);
+        break;
+    case 5:
+        draw_sprite(s, 44, 22);
+        break;
+    case 6:
+        draw_sprite(s, 1, 44);
+        break;
+    case 7:
+        draw_sprite(s, 22, 44);
+        break;
+    case 8:
+        draw_sprite(s, 44, 44);
+        break;
+    }
+}
 void startup(void) __attribute__((naked)) __attribute__((section(".start_section")));
 
 void startup(void)
@@ -54,6 +111,7 @@ void init_app()
     __asm volatile(" LDR R0,=0x08000209\n BLX R0 \n");
 #endif
     GPIO_E.moder = 0x55555555;
+    GPIO_D.moder = 0x55000000;
     gameState = 1;
 }
 
@@ -69,24 +127,39 @@ void ascii_write_string(char text[], char point, char row)
 }
 void write_symbol(char c)
 {
-    char current = grid[c];
+    char current = grid[c - 1];
     if(current == 0) {
-        grid[c-1] = gameState;
+        grid[c - 1] = gameState;
+        turn = 1;
     }
 }
 char checkWin()
 {
-    //cols
-    
-    //rows
-    grid[0]
-    //diags
+    char win;
+    // cols
+    for(char i = 0; i < 3; i++) {
+        win = win || (grid[i] == gameState && grid[3 + i] == gameState && grid[6 + i] == gameState);
+        if(win) {
+            return win;
+        }
+    }
+    // rows
+    for(char i = 0; i < 3; i++) {
+        win = win || (grid[3 * i] == gameState && grid[3 * i + 1] == gameState && grid[3 * i + 2] == gameState);
+        if(win) {
+            return win;
+        }
+    }
+    // diags
+    return (grid[0] == gameState && grid[4] == gameState && grid[8] == gameState) ||
+        (grid[2] == gameState && grid[4] == gameState && grid[6] == gameState);
 }
+
 void main(void)
 {
     unsigned i;
     char c;
-
+    gameState = 1;
     init_app();
     graphic_initialize();
 #ifndef SIMULATOR
@@ -100,22 +173,31 @@ void main(void)
     ascii_init();
     ascii_write_string(X, xPoints, 1);
     ascii_write_string(O, oPoints, 2);
-
     drawgrid();
     while(1) {
+        turn = 0;
         clear_backBuffer();
-        drawgrid();
         c = keyb();
         if(c >= 0 && c <= 9) {
             write_symbol(c);
+        }
+        if(gameState == 1) {
+            draw_sprite(&big_cross, 64, 1);
+        } else {
+            draw_sprite(&big_circle, 64, 1);
+        }
+        drawgrid();
+        if(checkWin()) {
+        }
+        if(turn) {
             if(gameState == 1) {
                 gameState = 2;
             } else {
                 gameState = 1;
             }
         }
-        checkWin();
 
+        delay_milli(40);
         graphic_draw_screen();
     }
 }

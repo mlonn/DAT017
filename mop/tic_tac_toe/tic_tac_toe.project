@@ -31,6 +31,9 @@
     <File Name="startup.c"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
+    <File Name="big_circle.xbm"/>
+    <File Name="big_cross.xbm"/>
+    <File Name="circle.xbm"/>
     <File Name="cross.xbm"/>
     <File Name="md407-ram.x"/>
   </VirtualDirectory>
@@ -145,4 +148,6 @@ monitor restart</PostConnectCommands>
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
