@@ -16,6 +16,7 @@
 char grid[9];
 char gameState;
 char turn;
+char win;
 sprite circle = { circle_width, circle_height, circle_bits };
 sprite cross = { cross_width, cross_height, cross_bits };
 
@@ -123,7 +124,7 @@ void ascii_write_string(char text[], char point, char row)
     while(*s) {
         ascii_write_char(*s++);
     }
-    ascii_write_char(point);
+    ascii_write_char('0' + point);
 }
 void write_symbol(char c)
 {
@@ -135,7 +136,6 @@ void write_symbol(char c)
 }
 char checkWin()
 {
-    char win;
     // cols
     for(char i = 0; i < 3; i++) {
         win = win || (grid[i] == gameState && grid[3 + i] == gameState && grid[6 + i] == gameState);
@@ -160,43 +160,62 @@ void main(void)
     unsigned i;
     char c;
     gameState = 1;
+    char g[9] = { 1, 1, 0, 0, 0, 0, 0, 0, 0 };
+    for(char i = 0; i < 9; i++) {
+        grid[i] = g[i];
+    }
     init_app();
     graphic_initialize();
 #ifndef SIMULATOR
     graphic_clear_screen();
 #endif
 
-    char xPoints = 0;
-    char oPoints = 0;
+    int xPoints = 0;
+    int oPoints = 0;
     char O[] = "O: ";
     char X[] = "X: ";
     ascii_init();
-    ascii_write_string(X, xPoints, 1);
-    ascii_write_string(O, oPoints, 2);
+
     drawgrid();
     while(1) {
         turn = 0;
         clear_backBuffer();
+
         c = keyb();
-        if(c >= 0 && c <= 9) {
-            write_symbol(c);
-        }
-        if(gameState == 1) {
-            draw_sprite(&big_cross, 64, 1);
-        } else {
-            draw_sprite(&big_circle, 64, 1);
-        }
-        drawgrid();
-        if(checkWin()) {
-        }
-        if(turn) {
+        if(!win) {
+            if(c >= 0 && c <= 9) {
+                write_symbol(c);
+            }
             if(gameState == 1) {
-                gameState = 2;
+                draw_sprite(&big_cross, 64, 1);
             } else {
-                gameState = 1;
+                draw_sprite(&big_circle, 64, 1);
+            }
+
+            if(checkWin()) {
+                if(gameState == 1) {
+                    xPoints = xPoints + 1;
+                } else {
+                    oPoints = oPoints + 1;
+                }
+            }
+            if(turn) {
+                if(gameState == 1) {
+                    gameState = 2;
+                } else {
+                    gameState = 1;
+                }
             }
         }
-
+        drawgrid();
+        if(c == 10) {
+            win = 0;
+            for(int i = 0; i < 9; i++) {
+                grid[i] = 0;
+            }
+        }
+        ascii_write_string(X, xPoints, 1);
+        ascii_write_string(O, oPoints, 2);
         delay_milli(40);
         graphic_draw_screen();
     }

@@ -4684,54 +4684,55 @@
  4218              		.comm	grid,9,4
  4219              		.comm	gameState,1,1
  4220              		.comm	turn,1,1
- 4221              		.global	circle
- 4222              		.align	2
- 4225              	circle:
- 4226 04ac 14       		.byte	20
- 4227 04ad 14       		.byte	20
- 4228 04ae 0000     		.space	2
- 4229 04b0 34000000 		.word	circle_bits
- 4230              		.global	cross
- 4231              		.align	2
- 4234              	cross:
- 4235 04b4 14       		.byte	20
- 4236 04b5 14       		.byte	20
- 4237 04b6 0000     		.space	2
- 4238 04b8 70000000 		.word	cross_bits
- 4239              		.global	big_circle
- 4240              		.align	2
- 4243              	big_circle:
- 4244 04bc 40       		.byte	64
- 4245 04bd 40       		.byte	64
- 4246 04be 0000     		.space	2
- 4247 04c0 AC000000 		.word	big_circle_bits
- 4248              		.global	big_cross
- 4249              		.align	2
- 4252              	big_cross:
- 4253 04c4 40       		.byte	64
- 4254 04c5 40       		.byte	64
- 4255 04c6 0000     		.space	2
- 4256 04c8 AC020000 		.word	big_cross_bits
- 4257              		.align	2
- 4260              	ball:
- 4261 04cc 00000000 		.word	ball_geometry
- 4262 04d0 00000000 		.word	0
- 4263 04d4 00000000 		.word	0
- 4264 04d8 0A000000 		.word	10
- 4265 04dc 0A000000 		.word	10
- 4266 04e0 00000000 		.word	draw_object
- 4267 04e4 00000000 		.word	move_object
- 4268 04e8 00000000 		.word	set_object_speed
- 4269              		.text
- 4270              		.align	1
- 4271              		.global	drawgrid
- 4272              		.syntax unified
- 4273              		.code	16
- 4274              		.thumb_func
- 4275              		.fpu softvfp
- 4277              	drawgrid:
- 4278              	.LFB41:
- 4279              		.file 6 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c"
+ 4221              		.comm	win,1,1
+ 4222              		.global	circle
+ 4223              		.align	2
+ 4226              	circle:
+ 4227 04ac 14       		.byte	20
+ 4228 04ad 14       		.byte	20
+ 4229 04ae 0000     		.space	2
+ 4230 04b0 34000000 		.word	circle_bits
+ 4231              		.global	cross
+ 4232              		.align	2
+ 4235              	cross:
+ 4236 04b4 14       		.byte	20
+ 4237 04b5 14       		.byte	20
+ 4238 04b6 0000     		.space	2
+ 4239 04b8 70000000 		.word	cross_bits
+ 4240              		.global	big_circle
+ 4241              		.align	2
+ 4244              	big_circle:
+ 4245 04bc 40       		.byte	64
+ 4246 04bd 40       		.byte	64
+ 4247 04be 0000     		.space	2
+ 4248 04c0 AC000000 		.word	big_circle_bits
+ 4249              		.global	big_cross
+ 4250              		.align	2
+ 4253              	big_cross:
+ 4254 04c4 40       		.byte	64
+ 4255 04c5 40       		.byte	64
+ 4256 04c6 0000     		.space	2
+ 4257 04c8 AC020000 		.word	big_cross_bits
+ 4258              		.align	2
+ 4261              	ball:
+ 4262 04cc 00000000 		.word	ball_geometry
+ 4263 04d0 00000000 		.word	0
+ 4264 04d4 00000000 		.word	0
+ 4265 04d8 0A000000 		.word	10
+ 4266 04dc 0A000000 		.word	10
+ 4267 04e0 00000000 		.word	draw_object
+ 4268 04e4 00000000 		.word	move_object
+ 4269 04e8 00000000 		.word	set_object_speed
+ 4270              		.text
+ 4271              		.align	1
+ 4272              		.global	drawgrid
+ 4273              		.syntax unified
+ 4274              		.code	16
+ 4275              		.thumb_func
+ 4276              		.fpu softvfp
+ 4278              	drawgrid:
+ 4279              	.LFB41:
+ 4280              		.file 6 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c"
    1:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** /*
    2:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****  * 	startup.c
    3:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****  *
@@ -4750,1184 +4751,1333 @@
   16:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** char grid[9];
   17:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** char gameState;
   18:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** char turn;
-  19:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** sprite circle = { circle_width, circle_height, circle_bits };
-  20:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** sprite cross = { cross_width, cross_height, cross_bits };
-  21:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
-  22:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** sprite big_circle = { big_circle_width, big_circle_height, big_circle_bits };
-  23:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** sprite big_cross = { big_cross_width, big_cross_height, big_cross_bits };
-  24:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
-  25:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** static OBJECT ball = {
-  26:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     &ball_geometry,  // geometry for a ball
-  27:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     0, 0,            // move direction (x,y)
-  28:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     10, 10,          // position (x,y)
-  29:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     draw_object,     // draw method
-  30:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     move_object,     // move method
-  31:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     set_object_speed // set-speed method
-  32:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** };
-  33:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
-  34:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void drawgrid(void)
-  35:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
- 4280              		.loc 6 35 1
- 4281              		.cfi_startproc
- 4282              		@ args = 0, pretend = 0, frame = 8
- 4283              		@ frame_needed = 1, uses_anonymous_args = 0
- 4284 0cb4 80B5     		push	{r7, lr}
- 4285              		.cfi_def_cfa_offset 8
- 4286              		.cfi_offset 7, -8
- 4287              		.cfi_offset 14, -4
- 4288 0cb6 82B0     		sub	sp, sp, #8
- 4289              		.cfi_def_cfa_offset 16
- 4290 0cb8 00AF     		add	r7, sp, #0
- 4291              		.cfi_def_cfa_register 7
-  36:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     unsigned i;
-  37:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(i = 0; i < 64; i++) {
- 4292              		.loc 6 37 11
- 4293 0cba 0023     		movs	r3, #0
- 4294 0cbc 7B60     		str	r3, [r7, #4]
- 4295              		.loc 6 37 5
- 4296 0cbe 07E0     		b	.L166
- 4297              	.L167:
+  19:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** char win;
+  20:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** sprite circle = { circle_width, circle_height, circle_bits };
+  21:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** sprite cross = { cross_width, cross_height, cross_bits };
+  22:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+  23:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** sprite big_circle = { big_circle_width, big_circle_height, big_circle_bits };
+  24:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** sprite big_cross = { big_cross_width, big_cross_height, big_cross_bits };
+  25:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+  26:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** static OBJECT ball = {
+  27:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     &ball_geometry,  // geometry for a ball
+  28:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     0, 0,            // move direction (x,y)
+  29:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     10, 10,          // position (x,y)
+  30:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     draw_object,     // draw method
+  31:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     move_object,     // move method
+  32:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     set_object_speed // set-speed method
+  33:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** };
+  34:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+  35:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void drawgrid(void)
+  36:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
+ 4281              		.loc 6 36 1
+ 4282              		.cfi_startproc
+ 4283              		@ args = 0, pretend = 0, frame = 8
+ 4284              		@ frame_needed = 1, uses_anonymous_args = 0
+ 4285 0cb4 80B5     		push	{r7, lr}
+ 4286              		.cfi_def_cfa_offset 8
+ 4287              		.cfi_offset 7, -8
+ 4288              		.cfi_offset 14, -4
+ 4289 0cb6 82B0     		sub	sp, sp, #8
+ 4290              		.cfi_def_cfa_offset 16
+ 4291 0cb8 00AF     		add	r7, sp, #0
+ 4292              		.cfi_def_cfa_register 7
+  37:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     unsigned i;
+  38:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(i = 0; i < 64; i++) {
+ 4293              		.loc 6 38 11
+ 4294 0cba 0023     		movs	r3, #0
+ 4295 0cbc 7B60     		str	r3, [r7, #4]
+ 4296              		.loc 6 38 5
+ 4297 0cbe 07E0     		b	.L166
+ 4298              	.L167:
+  39:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 21);
+ 4299              		.loc 6 39 9 discriminator 3
+ 4300 0cc0 7B68     		ldr	r3, [r7, #4]
+ 4301 0cc2 1521     		movs	r1, #21
+ 4302 0cc4 1800     		movs	r0, r3
+ 4303 0cc6 FFF7FEFF 		bl	pixel
   38:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 21);
- 4298              		.loc 6 38 9 discriminator 3
- 4299 0cc0 7B68     		ldr	r3, [r7, #4]
- 4300 0cc2 1521     		movs	r1, #21
- 4301 0cc4 1800     		movs	r0, r3
- 4302 0cc6 FFF7FEFF 		bl	pixel
-  37:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 21);
- 4303              		.loc 6 37 25 discriminator 3
- 4304 0cca 7B68     		ldr	r3, [r7, #4]
- 4305 0ccc 0133     		adds	r3, r3, #1
- 4306 0cce 7B60     		str	r3, [r7, #4]
- 4307              	.L166:
-  37:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 21);
- 4308              		.loc 6 37 5 discriminator 1
- 4309 0cd0 7B68     		ldr	r3, [r7, #4]
- 4310 0cd2 3F2B     		cmp	r3, #63
- 4311 0cd4 F4D9     		bls	.L167
-  39:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
-  40:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(i = 0; i < 64; i++) {
- 4312              		.loc 6 40 11
- 4313 0cd6 0023     		movs	r3, #0
- 4314 0cd8 7B60     		str	r3, [r7, #4]
- 4315              		.loc 6 40 5
- 4316 0cda 07E0     		b	.L168
- 4317              	.L169:
+ 4304              		.loc 6 38 25 discriminator 3
+ 4305 0cca 7B68     		ldr	r3, [r7, #4]
+ 4306 0ccc 0133     		adds	r3, r3, #1
+ 4307 0cce 7B60     		str	r3, [r7, #4]
+ 4308              	.L166:
+  38:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 21);
+ 4309              		.loc 6 38 5 discriminator 1
+ 4310 0cd0 7B68     		ldr	r3, [r7, #4]
+ 4311 0cd2 3F2B     		cmp	r3, #63
+ 4312 0cd4 F4D9     		bls	.L167
+  40:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+  41:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(i = 0; i < 64; i++) {
+ 4313              		.loc 6 41 11
+ 4314 0cd6 0023     		movs	r3, #0
+ 4315 0cd8 7B60     		str	r3, [r7, #4]
+ 4316              		.loc 6 41 5
+ 4317 0cda 07E0     		b	.L168
+ 4318              	.L169:
+  42:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(21, i);
+ 4319              		.loc 6 42 9 discriminator 3
+ 4320 0cdc 7B68     		ldr	r3, [r7, #4]
+ 4321 0cde 1900     		movs	r1, r3
+ 4322 0ce0 1520     		movs	r0, #21
+ 4323 0ce2 FFF7FEFF 		bl	pixel
   41:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(21, i);
- 4318              		.loc 6 41 9 discriminator 3
- 4319 0cdc 7B68     		ldr	r3, [r7, #4]
- 4320 0cde 1900     		movs	r1, r3
- 4321 0ce0 1520     		movs	r0, #21
- 4322 0ce2 FFF7FEFF 		bl	pixel
-  40:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(21, i);
- 4323              		.loc 6 40 25 discriminator 3
- 4324 0ce6 7B68     		ldr	r3, [r7, #4]
- 4325 0ce8 0133     		adds	r3, r3, #1
- 4326 0cea 7B60     		str	r3, [r7, #4]
- 4327              	.L168:
-  40:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(21, i);
- 4328              		.loc 6 40 5 discriminator 1
- 4329 0cec 7B68     		ldr	r3, [r7, #4]
- 4330 0cee 3F2B     		cmp	r3, #63
- 4331 0cf0 F4D9     		bls	.L169
-  42:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
-  43:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(i = 0; i < 64; i++) {
- 4332              		.loc 6 43 11
- 4333 0cf2 0023     		movs	r3, #0
- 4334 0cf4 7B60     		str	r3, [r7, #4]
- 4335              		.loc 6 43 5
- 4336 0cf6 07E0     		b	.L170
- 4337              	.L171:
+ 4324              		.loc 6 41 25 discriminator 3
+ 4325 0ce6 7B68     		ldr	r3, [r7, #4]
+ 4326 0ce8 0133     		adds	r3, r3, #1
+ 4327 0cea 7B60     		str	r3, [r7, #4]
+ 4328              	.L168:
+  41:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(21, i);
+ 4329              		.loc 6 41 5 discriminator 1
+ 4330 0cec 7B68     		ldr	r3, [r7, #4]
+ 4331 0cee 3F2B     		cmp	r3, #63
+ 4332 0cf0 F4D9     		bls	.L169
+  43:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+  44:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(i = 0; i < 64; i++) {
+ 4333              		.loc 6 44 11
+ 4334 0cf2 0023     		movs	r3, #0
+ 4335 0cf4 7B60     		str	r3, [r7, #4]
+ 4336              		.loc 6 44 5
+ 4337 0cf6 07E0     		b	.L170
+ 4338              	.L171:
+  45:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 43);
+ 4339              		.loc 6 45 9 discriminator 3
+ 4340 0cf8 7B68     		ldr	r3, [r7, #4]
+ 4341 0cfa 2B21     		movs	r1, #43
+ 4342 0cfc 1800     		movs	r0, r3
+ 4343 0cfe FFF7FEFF 		bl	pixel
   44:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 43);
- 4338              		.loc 6 44 9 discriminator 3
- 4339 0cf8 7B68     		ldr	r3, [r7, #4]
- 4340 0cfa 2B21     		movs	r1, #43
- 4341 0cfc 1800     		movs	r0, r3
- 4342 0cfe FFF7FEFF 		bl	pixel
-  43:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 43);
- 4343              		.loc 6 43 25 discriminator 3
- 4344 0d02 7B68     		ldr	r3, [r7, #4]
- 4345 0d04 0133     		adds	r3, r3, #1
- 4346 0d06 7B60     		str	r3, [r7, #4]
- 4347              	.L170:
-  43:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 43);
- 4348              		.loc 6 43 5 discriminator 1
- 4349 0d08 7B68     		ldr	r3, [r7, #4]
- 4350 0d0a 3F2B     		cmp	r3, #63
- 4351 0d0c F4D9     		bls	.L171
-  45:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
-  46:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(i = 0; i < 64; i++) {
- 4352              		.loc 6 46 11
- 4353 0d0e 0023     		movs	r3, #0
- 4354 0d10 7B60     		str	r3, [r7, #4]
- 4355              		.loc 6 46 5
- 4356 0d12 07E0     		b	.L172
- 4357              	.L173:
+ 4344              		.loc 6 44 25 discriminator 3
+ 4345 0d02 7B68     		ldr	r3, [r7, #4]
+ 4346 0d04 0133     		adds	r3, r3, #1
+ 4347 0d06 7B60     		str	r3, [r7, #4]
+ 4348              	.L170:
+  44:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(i, 43);
+ 4349              		.loc 6 44 5 discriminator 1
+ 4350 0d08 7B68     		ldr	r3, [r7, #4]
+ 4351 0d0a 3F2B     		cmp	r3, #63
+ 4352 0d0c F4D9     		bls	.L171
+  46:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+  47:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(i = 0; i < 64; i++) {
+ 4353              		.loc 6 47 11
+ 4354 0d0e 0023     		movs	r3, #0
+ 4355 0d10 7B60     		str	r3, [r7, #4]
+ 4356              		.loc 6 47 5
+ 4357 0d12 07E0     		b	.L172
+ 4358              	.L173:
+  48:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(43, i);
+ 4359              		.loc 6 48 9 discriminator 3
+ 4360 0d14 7B68     		ldr	r3, [r7, #4]
+ 4361 0d16 1900     		movs	r1, r3
+ 4362 0d18 2B20     		movs	r0, #43
+ 4363 0d1a FFF7FEFF 		bl	pixel
   47:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(43, i);
- 4358              		.loc 6 47 9 discriminator 3
- 4359 0d14 7B68     		ldr	r3, [r7, #4]
- 4360 0d16 1900     		movs	r1, r3
- 4361 0d18 2B20     		movs	r0, #43
- 4362 0d1a FFF7FEFF 		bl	pixel
-  46:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(43, i);
- 4363              		.loc 6 46 25 discriminator 3
- 4364 0d1e 7B68     		ldr	r3, [r7, #4]
- 4365 0d20 0133     		adds	r3, r3, #1
- 4366 0d22 7B60     		str	r3, [r7, #4]
- 4367              	.L172:
-  46:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(43, i);
- 4368              		.loc 6 46 5 discriminator 1
- 4369 0d24 7B68     		ldr	r3, [r7, #4]
- 4370 0d26 3F2B     		cmp	r3, #63
- 4371 0d28 F4D9     		bls	.L173
- 4372              	.LBB9:
-  48:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
-  49:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
-  50:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(char i = 0; i < 9; i++) {
- 4373              		.loc 6 50 14
- 4374 0d2a FB1C     		adds	r3, r7, #3
- 4375 0d2c 0022     		movs	r2, #0
- 4376 0d2e 1A70     		strb	r2, [r3]
- 4377              		.loc 6 50 5
- 4378 0d30 1DE0     		b	.L174
- 4379              	.L177:
+ 4364              		.loc 6 47 25 discriminator 3
+ 4365 0d1e 7B68     		ldr	r3, [r7, #4]
+ 4366 0d20 0133     		adds	r3, r3, #1
+ 4367 0d22 7B60     		str	r3, [r7, #4]
+ 4368              	.L172:
+  47:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         pixel(43, i);
+ 4369              		.loc 6 47 5 discriminator 1
+ 4370 0d24 7B68     		ldr	r3, [r7, #4]
+ 4371 0d26 3F2B     		cmp	r3, #63
+ 4372 0d28 F4D9     		bls	.L173
+ 4373              	.LBB9:
+  49:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+  50:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+  51:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(char i = 0; i < 9; i++) {
+ 4374              		.loc 6 51 14
+ 4375 0d2a FB1C     		adds	r3, r7, #3
+ 4376 0d2c 0022     		movs	r2, #0
+ 4377 0d2e 1A70     		strb	r2, [r3]
+ 4378              		.loc 6 51 5
+ 4379 0d30 1DE0     		b	.L174
+ 4380              	.L177:
+  52:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(grid[i] == 1) {
+ 4381              		.loc 6 52 16
+ 4382 0d32 FB1C     		adds	r3, r7, #3
+ 4383 0d34 1B78     		ldrb	r3, [r3]
+ 4384 0d36 124A     		ldr	r2, .L178
+ 4385 0d38 D35C     		ldrb	r3, [r2, r3]
+ 4386              		.loc 6 52 11
+ 4387 0d3a 012B     		cmp	r3, #1
+ 4388 0d3c 06D1     		bne	.L175
+ 4389              	.LBB10:
+  53:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             draw_in_grid(1, i);
+ 4390              		.loc 6 53 13
+ 4391 0d3e FB1C     		adds	r3, r7, #3
+ 4392 0d40 1B78     		ldrb	r3, [r3]
+ 4393 0d42 1900     		movs	r1, r3
+ 4394 0d44 0120     		movs	r0, #1
+ 4395 0d46 FFF7FEFF 		bl	draw_in_grid
+ 4396              	.LBE10:
+ 4397 0d4a 0BE0     		b	.L176
+ 4398              	.L175:
+  54:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         } else if(grid[i] == 2) {
+ 4399              		.loc 6 54 23
+ 4400 0d4c FB1C     		adds	r3, r7, #3
+ 4401 0d4e 1B78     		ldrb	r3, [r3]
+ 4402 0d50 0B4A     		ldr	r2, .L178
+ 4403 0d52 D35C     		ldrb	r3, [r2, r3]
+ 4404              		.loc 6 54 18
+ 4405 0d54 022B     		cmp	r3, #2
+ 4406 0d56 05D1     		bne	.L176
+ 4407              	.LBB11:
+  55:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             draw_in_grid(2, i);
+ 4408              		.loc 6 55 13
+ 4409 0d58 FB1C     		adds	r3, r7, #3
+ 4410 0d5a 1B78     		ldrb	r3, [r3]
+ 4411 0d5c 1900     		movs	r1, r3
+ 4412 0d5e 0220     		movs	r0, #2
+ 4413 0d60 FFF7FEFF 		bl	draw_in_grid
+ 4414              	.L176:
+ 4415              	.LBE11:
   51:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(grid[i] == 1) {
- 4380              		.loc 6 51 16
- 4381 0d32 FB1C     		adds	r3, r7, #3
- 4382 0d34 1B78     		ldrb	r3, [r3]
- 4383 0d36 124A     		ldr	r2, .L178
- 4384 0d38 D35C     		ldrb	r3, [r2, r3]
- 4385              		.loc 6 51 11
- 4386 0d3a 012B     		cmp	r3, #1
- 4387 0d3c 06D1     		bne	.L175
- 4388              	.LBB10:
-  52:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             draw_in_grid(1, i);
- 4389              		.loc 6 52 13
- 4390 0d3e FB1C     		adds	r3, r7, #3
- 4391 0d40 1B78     		ldrb	r3, [r3]
- 4392 0d42 1900     		movs	r1, r3
- 4393 0d44 0120     		movs	r0, #1
- 4394 0d46 FFF7FEFF 		bl	draw_in_grid
- 4395              	.LBE10:
- 4396 0d4a 0BE0     		b	.L176
- 4397              	.L175:
-  53:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         } else if(grid[i] == 2) {
- 4398              		.loc 6 53 23
- 4399 0d4c FB1C     		adds	r3, r7, #3
- 4400 0d4e 1B78     		ldrb	r3, [r3]
- 4401 0d50 0B4A     		ldr	r2, .L178
- 4402 0d52 D35C     		ldrb	r3, [r2, r3]
- 4403              		.loc 6 53 18
- 4404 0d54 022B     		cmp	r3, #2
- 4405 0d56 05D1     		bne	.L176
- 4406              	.LBB11:
-  54:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             draw_in_grid(2, i);
- 4407              		.loc 6 54 13
- 4408 0d58 FB1C     		adds	r3, r7, #3
- 4409 0d5a 1B78     		ldrb	r3, [r3]
- 4410 0d5c 1900     		movs	r1, r3
- 4411 0d5e 0220     		movs	r0, #2
- 4412 0d60 FFF7FEFF 		bl	draw_in_grid
- 4413              	.L176:
- 4414              	.LBE11:
-  50:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(grid[i] == 1) {
- 4415              		.loc 6 50 29 discriminator 2
- 4416 0d64 FB1C     		adds	r3, r7, #3
- 4417 0d66 1A78     		ldrb	r2, [r3]
- 4418 0d68 FB1C     		adds	r3, r7, #3
- 4419 0d6a 0132     		adds	r2, r2, #1
- 4420 0d6c 1A70     		strb	r2, [r3]
- 4421              	.L174:
-  50:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(grid[i] == 1) {
- 4422              		.loc 6 50 5 discriminator 1
- 4423 0d6e FB1C     		adds	r3, r7, #3
- 4424 0d70 1B78     		ldrb	r3, [r3]
- 4425 0d72 082B     		cmp	r3, #8
- 4426 0d74 DDD9     		bls	.L177
- 4427              	.LBE9:
-  55:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
-  56:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
-  57:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
- 4428              		.loc 6 57 1
- 4429 0d76 C046     		nop
- 4430 0d78 BD46     		mov	sp, r7
- 4431 0d7a 02B0     		add	sp, sp, #8
- 4432              		@ sp needed
- 4433 0d7c 80BD     		pop	{r7, pc}
- 4434              	.L179:
- 4435 0d7e C046     		.align	2
- 4436              	.L178:
- 4437 0d80 00000000 		.word	grid
- 4438              		.cfi_endproc
- 4439              	.LFE41:
- 4441              		.align	1
- 4442              		.global	draw_in_grid
- 4443              		.syntax unified
- 4444              		.code	16
- 4445              		.thumb_func
- 4446              		.fpu softvfp
- 4448              	draw_in_grid:
- 4449              	.LFB42:
-  58:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void draw_in_grid(char player, char i)
-  59:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
- 4450              		.loc 6 59 1
- 4451              		.cfi_startproc
- 4452              		@ args = 0, pretend = 0, frame = 16
- 4453              		@ frame_needed = 1, uses_anonymous_args = 0
- 4454 0d84 80B5     		push	{r7, lr}
- 4455              		.cfi_def_cfa_offset 8
- 4456              		.cfi_offset 7, -8
- 4457              		.cfi_offset 14, -4
- 4458 0d86 84B0     		sub	sp, sp, #16
- 4459              		.cfi_def_cfa_offset 24
- 4460 0d88 00AF     		add	r7, sp, #0
- 4461              		.cfi_def_cfa_register 7
- 4462 0d8a 0200     		movs	r2, r0
- 4463 0d8c FB1D     		adds	r3, r7, #7
- 4464 0d8e 1A70     		strb	r2, [r3]
- 4465 0d90 BB1D     		adds	r3, r7, #6
- 4466 0d92 0A1C     		adds	r2, r1, #0
- 4467 0d94 1A70     		strb	r2, [r3]
-  60:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char* s;
-  61:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     if(player == 1) {
- 4468              		.loc 6 61 7
- 4469 0d96 FB1D     		adds	r3, r7, #7
- 4470 0d98 1B78     		ldrb	r3, [r3]
- 4471 0d9a 012B     		cmp	r3, #1
- 4472 0d9c 02D1     		bne	.L181
-  62:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         s = &cross;
- 4473              		.loc 6 62 11
- 4474 0d9e 284B     		ldr	r3, .L195
- 4475 0da0 FB60     		str	r3, [r7, #12]
- 4476 0da2 01E0     		b	.L182
- 4477              	.L181:
-  63:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     } else {
-  64:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         s = &circle;
- 4478              		.loc 6 64 11
- 4479 0da4 274B     		ldr	r3, .L195+4
- 4480 0da6 FB60     		str	r3, [r7, #12]
- 4481              	.L182:
-  65:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
-  66:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     switch(i) {
- 4482              		.loc 6 66 5
- 4483 0da8 BB1D     		adds	r3, r7, #6
- 4484 0daa 1B78     		ldrb	r3, [r3]
- 4485 0dac 082B     		cmp	r3, #8
- 4486 0dae 43D8     		bhi	.L194
- 4487 0db0 9A00     		lsls	r2, r3, #2
- 4488 0db2 254B     		ldr	r3, .L195+8
- 4489 0db4 D318     		adds	r3, r2, r3
- 4490 0db6 1B68     		ldr	r3, [r3]
- 4491 0db8 9F46     		mov	pc, r3
- 4492              		.section	.rodata
- 4493              		.align	2
- 4494              	.L185:
- 4495 0024 BA0D0000 		.word	.L193
- 4496 0028 C80D0000 		.word	.L192
- 4497 002c D60D0000 		.word	.L191
- 4498 0030 E40D0000 		.word	.L190
- 4499 0034 F20D0000 		.word	.L189
- 4500 0038 000E0000 		.word	.L188
- 4501 003c 0E0E0000 		.word	.L187
- 4502 0040 1C0E0000 		.word	.L186
- 4503 0044 2A0E0000 		.word	.L184
- 4504              		.text
- 4505              	.L193:
-  67:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 0:
-  68:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 1, 1);
- 4506              		.loc 6 68 9
- 4507 0dba FB68     		ldr	r3, [r7, #12]
- 4508 0dbc 0122     		movs	r2, #1
- 4509 0dbe 0121     		movs	r1, #1
- 4510 0dc0 1800     		movs	r0, r3
- 4511 0dc2 FFF7FEFF 		bl	draw_sprite
-  69:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
- 4512              		.loc 6 69 9
- 4513 0dc6 37E0     		b	.L183
- 4514              	.L192:
-  70:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 1:
-  71:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 22, 1);
- 4515              		.loc 6 71 9
- 4516 0dc8 FB68     		ldr	r3, [r7, #12]
- 4517 0dca 0122     		movs	r2, #1
- 4518 0dcc 1621     		movs	r1, #22
- 4519 0dce 1800     		movs	r0, r3
- 4520 0dd0 FFF7FEFF 		bl	draw_sprite
-  72:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
- 4521              		.loc 6 72 9
- 4522 0dd4 30E0     		b	.L183
- 4523              	.L191:
-  73:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 2:
-  74:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 44, 1);
- 4524              		.loc 6 74 9
- 4525 0dd6 FB68     		ldr	r3, [r7, #12]
- 4526 0dd8 0122     		movs	r2, #1
- 4527 0dda 2C21     		movs	r1, #44
- 4528 0ddc 1800     		movs	r0, r3
- 4529 0dde FFF7FEFF 		bl	draw_sprite
-  75:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
- 4530              		.loc 6 75 9
- 4531 0de2 29E0     		b	.L183
- 4532              	.L190:
-  76:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 3:
-  77:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 1, 22);
- 4533              		.loc 6 77 9
- 4534 0de4 FB68     		ldr	r3, [r7, #12]
- 4535 0de6 1622     		movs	r2, #22
- 4536 0de8 0121     		movs	r1, #1
- 4537 0dea 1800     		movs	r0, r3
- 4538 0dec FFF7FEFF 		bl	draw_sprite
-  78:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
- 4539              		.loc 6 78 9
- 4540 0df0 22E0     		b	.L183
- 4541              	.L189:
-  79:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 4:
-  80:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 22, 22);
- 4542              		.loc 6 80 9
- 4543 0df2 FB68     		ldr	r3, [r7, #12]
- 4544 0df4 1622     		movs	r2, #22
- 4545 0df6 1621     		movs	r1, #22
- 4546 0df8 1800     		movs	r0, r3
- 4547 0dfa FFF7FEFF 		bl	draw_sprite
-  81:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
- 4548              		.loc 6 81 9
- 4549 0dfe 1BE0     		b	.L183
- 4550              	.L188:
-  82:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 5:
-  83:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 44, 22);
- 4551              		.loc 6 83 9
- 4552 0e00 FB68     		ldr	r3, [r7, #12]
- 4553 0e02 1622     		movs	r2, #22
- 4554 0e04 2C21     		movs	r1, #44
- 4555 0e06 1800     		movs	r0, r3
- 4556 0e08 FFF7FEFF 		bl	draw_sprite
-  84:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
- 4557              		.loc 6 84 9
- 4558 0e0c 14E0     		b	.L183
- 4559              	.L187:
-  85:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 6:
-  86:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 1, 44);
- 4560              		.loc 6 86 9
- 4561 0e0e FB68     		ldr	r3, [r7, #12]
- 4562 0e10 2C22     		movs	r2, #44
- 4563 0e12 0121     		movs	r1, #1
- 4564 0e14 1800     		movs	r0, r3
- 4565 0e16 FFF7FEFF 		bl	draw_sprite
-  87:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
- 4566              		.loc 6 87 9
- 4567 0e1a 0DE0     		b	.L183
- 4568              	.L186:
-  88:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 7:
-  89:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 22, 44);
- 4569              		.loc 6 89 9
- 4570 0e1c FB68     		ldr	r3, [r7, #12]
- 4571 0e1e 2C22     		movs	r2, #44
- 4572 0e20 1621     		movs	r1, #22
- 4573 0e22 1800     		movs	r0, r3
- 4574 0e24 FFF7FEFF 		bl	draw_sprite
-  90:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
- 4575              		.loc 6 90 9
- 4576 0e28 06E0     		b	.L183
- 4577              	.L184:
-  91:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 8:
-  92:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 44, 44);
- 4578              		.loc 6 92 9
- 4579 0e2a FB68     		ldr	r3, [r7, #12]
- 4580 0e2c 2C22     		movs	r2, #44
- 4581 0e2e 2C21     		movs	r1, #44
- 4582 0e30 1800     		movs	r0, r3
- 4583 0e32 FFF7FEFF 		bl	draw_sprite
-  93:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
- 4584              		.loc 6 93 9
- 4585 0e36 C046     		nop
- 4586              	.L183:
- 4587              	.L194:
-  94:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
-  95:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
- 4588              		.loc 6 95 1
- 4589 0e38 C046     		nop
- 4590 0e3a BD46     		mov	sp, r7
- 4591 0e3c 04B0     		add	sp, sp, #16
- 4592              		@ sp needed
- 4593 0e3e 80BD     		pop	{r7, pc}
- 4594              	.L196:
- 4595              		.align	2
- 4596              	.L195:
- 4597 0e40 00000000 		.word	cross
- 4598 0e44 00000000 		.word	circle
- 4599 0e48 24000000 		.word	.L185
- 4600              		.cfi_endproc
- 4601              	.LFE42:
- 4603              		.section	.start_section,"ax",%progbits
- 4604              		.align	1
- 4605              		.global	startup
- 4606              		.syntax unified
- 4607              		.code	16
- 4608              		.thumb_func
- 4609              		.fpu softvfp
- 4611              	startup:
- 4612              	.LFB43:
-  96:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void startup(void) __attribute__((naked)) __attribute__((section(".start_section")));
-  97:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
-  98:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void startup(void)
-  99:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
- 4613              		.loc 6 99 1
- 4614              		.cfi_startproc
- 4615              		@ Naked Function: prologue and epilogue provided by programmer.
- 4616              		@ args = 0, pretend = 0, frame = 0
- 4617              		@ frame_needed = 1, uses_anonymous_args = 0
- 100:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     __asm volatile(" LDR R0,=0x2001C000\n" /* set stack */
- 4618              		.loc 6 100 5
- 4619              		.syntax divided
- 4620              	@ 100 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c" 1
- 4621 0000 0248     		 LDR R0,=0x2001C000
- 4622 0002 8546     	 MOV SP,R0
- 4623 0004 FFF7FEFF 	 BL main
- 4624 0008 FEE7     	.L1: B .L1
- 4625              	
- 4626              	@ 0 "" 2
- 101:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                    " MOV SP,R0\n"
- 102:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                    " BL main\n"   /* call main */
- 103:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                    ".L1: B .L1\n" /* never return */
- 104:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         );
- 105:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
- 4627              		.loc 6 105 1
- 4628              		.thumb
- 4629              		.syntax unified
- 4630 000a C046     		nop
- 4631              		.cfi_endproc
- 4632              	.LFE43:
- 4634              		.text
- 4635              		.align	1
- 4636              		.global	init_app
- 4637              		.syntax unified
- 4638              		.code	16
- 4639              		.thumb_func
- 4640              		.fpu softvfp
- 4642              	init_app:
- 4643              	.LFB44:
- 106:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
- 107:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void init_app()
- 108:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
- 4644              		.loc 6 108 1
- 4645              		.cfi_startproc
- 4646              		@ args = 0, pretend = 0, frame = 0
- 4647              		@ frame_needed = 1, uses_anonymous_args = 0
- 4648 0e4c 80B5     		push	{r7, lr}
- 4649              		.cfi_def_cfa_offset 8
- 4650              		.cfi_offset 7, -8
- 4651              		.cfi_offset 14, -4
- 4652 0e4e 00AF     		add	r7, sp, #0
- 4653              		.cfi_def_cfa_register 7
- 109:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** #ifdef USBDM
- 110:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     *((unsigned long*)0x40023830) = 0x18;
- 111:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     __asm volatile(" LDR R0,=0x08000209\n BLX R0 \n");
- 112:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** #endif
- 113:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     GPIO_E.moder = 0x55555555;
- 4654              		.loc 6 113 5
- 4655 0e50 064B     		ldr	r3, .L199
- 4656              		.loc 6 113 18
- 4657 0e52 074A     		ldr	r2, .L199+4
- 4658 0e54 1A60     		str	r2, [r3]
- 114:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     GPIO_D.moder = 0x55000000;
- 4659              		.loc 6 114 5
- 4660 0e56 074B     		ldr	r3, .L199+8
- 4661              		.loc 6 114 18
- 4662 0e58 AA22     		movs	r2, #170
- 4663 0e5a D205     		lsls	r2, r2, #23
- 4664 0e5c 1A60     		str	r2, [r3]
- 115:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     gameState = 1;
- 4665              		.loc 6 115 15
- 4666 0e5e 064B     		ldr	r3, .L199+12
- 4667 0e60 0122     		movs	r2, #1
- 4668 0e62 1A70     		strb	r2, [r3]
- 116:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
- 4669              		.loc 6 116 1
- 4670 0e64 C046     		nop
- 4671 0e66 BD46     		mov	sp, r7
- 4672              		@ sp needed
- 4673 0e68 80BD     		pop	{r7, pc}
- 4674              	.L200:
- 4675 0e6a C046     		.align	2
- 4676              	.L199:
- 4677 0e6c 00100240 		.word	1073876992
- 4678 0e70 55555555 		.word	1431655765
- 4679 0e74 000C0240 		.word	1073875968
- 4680 0e78 00000000 		.word	gameState
- 4681              		.cfi_endproc
- 4682              	.LFE44:
- 4684              		.align	1
- 4685              		.global	ascii_write_string
- 4686              		.syntax unified
- 4687              		.code	16
- 4688              		.thumb_func
- 4689              		.fpu softvfp
- 4691              	ascii_write_string:
- 4692              	.LFB45:
- 117:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
- 118:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void ascii_write_string(char text[], char point, char row)
- 119:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
- 4693              		.loc 6 119 1
- 4694              		.cfi_startproc
- 4695              		@ args = 0, pretend = 0, frame = 16
- 4696              		@ frame_needed = 1, uses_anonymous_args = 0
- 4697 0e7c 80B5     		push	{r7, lr}
- 4698              		.cfi_def_cfa_offset 8
- 4699              		.cfi_offset 7, -8
- 4700              		.cfi_offset 14, -4
- 4701 0e7e 84B0     		sub	sp, sp, #16
- 4702              		.cfi_def_cfa_offset 24
- 4703 0e80 00AF     		add	r7, sp, #0
- 4704              		.cfi_def_cfa_register 7
- 4705 0e82 7860     		str	r0, [r7, #4]
- 4706 0e84 0800     		movs	r0, r1
- 4707 0e86 1100     		movs	r1, r2
- 4708 0e88 FB1C     		adds	r3, r7, #3
- 4709 0e8a 021C     		adds	r2, r0, #0
- 4710 0e8c 1A70     		strb	r2, [r3]
- 4711 0e8e BB1C     		adds	r3, r7, #2
- 4712 0e90 0A1C     		adds	r2, r1, #0
- 4713 0e92 1A70     		strb	r2, [r3]
- 120:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char* s;
- 121:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     s = text;
- 4714              		.loc 6 121 7
- 4715 0e94 7B68     		ldr	r3, [r7, #4]
- 4716 0e96 FB60     		str	r3, [r7, #12]
- 122:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     ascii_gotoxy(1, row);
- 4717              		.loc 6 122 5
- 4718 0e98 BB1C     		adds	r3, r7, #2
- 4719 0e9a 1B78     		ldrb	r3, [r3]
- 4720 0e9c 1900     		movs	r1, r3
- 4721 0e9e 0120     		movs	r0, #1
- 4722 0ea0 FFF7FEFF 		bl	ascii_gotoxy
- 123:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     while(*s) {
- 4723              		.loc 6 123 10
- 4724 0ea4 06E0     		b	.L202
- 4725              	.L203:
- 124:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         ascii_write_char(*s++);
- 4726              		.loc 6 124 28
- 4727 0ea6 FB68     		ldr	r3, [r7, #12]
- 4728 0ea8 5A1C     		adds	r2, r3, #1
- 4729 0eaa FA60     		str	r2, [r7, #12]
- 4730              		.loc 6 124 9
- 4731 0eac 1B78     		ldrb	r3, [r3]
- 4732 0eae 1800     		movs	r0, r3
- 4733 0eb0 FFF7FEFF 		bl	ascii_write_char
- 4734              	.L202:
- 123:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     while(*s) {
- 4735              		.loc 6 123 11
- 4736 0eb4 FB68     		ldr	r3, [r7, #12]
- 4737 0eb6 1B78     		ldrb	r3, [r3]
- 123:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     while(*s) {
- 4738              		.loc 6 123 10
- 4739 0eb8 002B     		cmp	r3, #0
- 4740 0eba F4D1     		bne	.L203
- 125:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
- 126:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     ascii_write_char(point);
- 4741              		.loc 6 126 5
- 4742 0ebc FB1C     		adds	r3, r7, #3
- 4743 0ebe 1B78     		ldrb	r3, [r3]
- 4744 0ec0 1800     		movs	r0, r3
- 4745 0ec2 FFF7FEFF 		bl	ascii_write_char
- 127:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
- 4746              		.loc 6 127 1
- 4747 0ec6 C046     		nop
- 4748 0ec8 BD46     		mov	sp, r7
- 4749 0eca 04B0     		add	sp, sp, #16
- 4750              		@ sp needed
- 4751 0ecc 80BD     		pop	{r7, pc}
- 4752              		.cfi_endproc
- 4753              	.LFE45:
- 4755              		.align	1
- 4756              		.global	write_symbol
- 4757              		.syntax unified
- 4758              		.code	16
- 4759              		.thumb_func
- 4760              		.fpu softvfp
- 4762              	write_symbol:
- 4763              	.LFB46:
- 128:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void write_symbol(char c)
- 129:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
- 4764              		.loc 6 129 1
- 4765              		.cfi_startproc
- 4766              		@ args = 0, pretend = 0, frame = 16
- 4767              		@ frame_needed = 1, uses_anonymous_args = 0
- 4768 0ece 80B5     		push	{r7, lr}
- 4769              		.cfi_def_cfa_offset 8
- 4770              		.cfi_offset 7, -8
- 4771              		.cfi_offset 14, -4
- 4772 0ed0 84B0     		sub	sp, sp, #16
- 4773              		.cfi_def_cfa_offset 24
- 4774 0ed2 00AF     		add	r7, sp, #0
- 4775              		.cfi_def_cfa_register 7
- 4776 0ed4 0200     		movs	r2, r0
- 4777 0ed6 FB1D     		adds	r3, r7, #7
- 4778 0ed8 1A70     		strb	r2, [r3]
- 130:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char current = grid[c - 1];
- 4779              		.loc 6 130 27
+ 4416              		.loc 6 51 29 discriminator 2
+ 4417 0d64 FB1C     		adds	r3, r7, #3
+ 4418 0d66 1A78     		ldrb	r2, [r3]
+ 4419 0d68 FB1C     		adds	r3, r7, #3
+ 4420 0d6a 0132     		adds	r2, r2, #1
+ 4421 0d6c 1A70     		strb	r2, [r3]
+ 4422              	.L174:
+  51:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(grid[i] == 1) {
+ 4423              		.loc 6 51 5 discriminator 1
+ 4424 0d6e FB1C     		adds	r3, r7, #3
+ 4425 0d70 1B78     		ldrb	r3, [r3]
+ 4426 0d72 082B     		cmp	r3, #8
+ 4427 0d74 DDD9     		bls	.L177
+ 4428              	.LBE9:
+  56:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
+  57:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+  58:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
+ 4429              		.loc 6 58 1
+ 4430 0d76 C046     		nop
+ 4431 0d78 BD46     		mov	sp, r7
+ 4432 0d7a 02B0     		add	sp, sp, #8
+ 4433              		@ sp needed
+ 4434 0d7c 80BD     		pop	{r7, pc}
+ 4435              	.L179:
+ 4436 0d7e C046     		.align	2
+ 4437              	.L178:
+ 4438 0d80 00000000 		.word	grid
+ 4439              		.cfi_endproc
+ 4440              	.LFE41:
+ 4442              		.align	1
+ 4443              		.global	draw_in_grid
+ 4444              		.syntax unified
+ 4445              		.code	16
+ 4446              		.thumb_func
+ 4447              		.fpu softvfp
+ 4449              	draw_in_grid:
+ 4450              	.LFB42:
+  59:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void draw_in_grid(char player, char i)
+  60:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
+ 4451              		.loc 6 60 1
+ 4452              		.cfi_startproc
+ 4453              		@ args = 0, pretend = 0, frame = 16
+ 4454              		@ frame_needed = 1, uses_anonymous_args = 0
+ 4455 0d84 80B5     		push	{r7, lr}
+ 4456              		.cfi_def_cfa_offset 8
+ 4457              		.cfi_offset 7, -8
+ 4458              		.cfi_offset 14, -4
+ 4459 0d86 84B0     		sub	sp, sp, #16
+ 4460              		.cfi_def_cfa_offset 24
+ 4461 0d88 00AF     		add	r7, sp, #0
+ 4462              		.cfi_def_cfa_register 7
+ 4463 0d8a 0200     		movs	r2, r0
+ 4464 0d8c FB1D     		adds	r3, r7, #7
+ 4465 0d8e 1A70     		strb	r2, [r3]
+ 4466 0d90 BB1D     		adds	r3, r7, #6
+ 4467 0d92 0A1C     		adds	r2, r1, #0
+ 4468 0d94 1A70     		strb	r2, [r3]
+  61:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char* s;
+  62:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     if(player == 1) {
+ 4469              		.loc 6 62 7
+ 4470 0d96 FB1D     		adds	r3, r7, #7
+ 4471 0d98 1B78     		ldrb	r3, [r3]
+ 4472 0d9a 012B     		cmp	r3, #1
+ 4473 0d9c 02D1     		bne	.L181
+  63:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         s = &cross;
+ 4474              		.loc 6 63 11
+ 4475 0d9e 284B     		ldr	r3, .L195
+ 4476 0da0 FB60     		str	r3, [r7, #12]
+ 4477 0da2 01E0     		b	.L182
+ 4478              	.L181:
+  64:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     } else {
+  65:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         s = &circle;
+ 4479              		.loc 6 65 11
+ 4480 0da4 274B     		ldr	r3, .L195+4
+ 4481 0da6 FB60     		str	r3, [r7, #12]
+ 4482              	.L182:
+  66:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+  67:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     switch(i) {
+ 4483              		.loc 6 67 5
+ 4484 0da8 BB1D     		adds	r3, r7, #6
+ 4485 0daa 1B78     		ldrb	r3, [r3]
+ 4486 0dac 082B     		cmp	r3, #8
+ 4487 0dae 43D8     		bhi	.L194
+ 4488 0db0 9A00     		lsls	r2, r3, #2
+ 4489 0db2 254B     		ldr	r3, .L195+8
+ 4490 0db4 D318     		adds	r3, r2, r3
+ 4491 0db6 1B68     		ldr	r3, [r3]
+ 4492 0db8 9F46     		mov	pc, r3
+ 4493              		.section	.rodata
+ 4494              		.align	2
+ 4495              	.L185:
+ 4496 0024 BA0D0000 		.word	.L193
+ 4497 0028 C80D0000 		.word	.L192
+ 4498 002c D60D0000 		.word	.L191
+ 4499 0030 E40D0000 		.word	.L190
+ 4500 0034 F20D0000 		.word	.L189
+ 4501 0038 000E0000 		.word	.L188
+ 4502 003c 0E0E0000 		.word	.L187
+ 4503 0040 1C0E0000 		.word	.L186
+ 4504 0044 2A0E0000 		.word	.L184
+ 4505              		.text
+ 4506              	.L193:
+  68:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 0:
+  69:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 1, 1);
+ 4507              		.loc 6 69 9
+ 4508 0dba FB68     		ldr	r3, [r7, #12]
+ 4509 0dbc 0122     		movs	r2, #1
+ 4510 0dbe 0121     		movs	r1, #1
+ 4511 0dc0 1800     		movs	r0, r3
+ 4512 0dc2 FFF7FEFF 		bl	draw_sprite
+  70:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
+ 4513              		.loc 6 70 9
+ 4514 0dc6 37E0     		b	.L183
+ 4515              	.L192:
+  71:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 1:
+  72:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 22, 1);
+ 4516              		.loc 6 72 9
+ 4517 0dc8 FB68     		ldr	r3, [r7, #12]
+ 4518 0dca 0122     		movs	r2, #1
+ 4519 0dcc 1621     		movs	r1, #22
+ 4520 0dce 1800     		movs	r0, r3
+ 4521 0dd0 FFF7FEFF 		bl	draw_sprite
+  73:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
+ 4522              		.loc 6 73 9
+ 4523 0dd4 30E0     		b	.L183
+ 4524              	.L191:
+  74:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 2:
+  75:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 44, 1);
+ 4525              		.loc 6 75 9
+ 4526 0dd6 FB68     		ldr	r3, [r7, #12]
+ 4527 0dd8 0122     		movs	r2, #1
+ 4528 0dda 2C21     		movs	r1, #44
+ 4529 0ddc 1800     		movs	r0, r3
+ 4530 0dde FFF7FEFF 		bl	draw_sprite
+  76:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
+ 4531              		.loc 6 76 9
+ 4532 0de2 29E0     		b	.L183
+ 4533              	.L190:
+  77:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 3:
+  78:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 1, 22);
+ 4534              		.loc 6 78 9
+ 4535 0de4 FB68     		ldr	r3, [r7, #12]
+ 4536 0de6 1622     		movs	r2, #22
+ 4537 0de8 0121     		movs	r1, #1
+ 4538 0dea 1800     		movs	r0, r3
+ 4539 0dec FFF7FEFF 		bl	draw_sprite
+  79:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
+ 4540              		.loc 6 79 9
+ 4541 0df0 22E0     		b	.L183
+ 4542              	.L189:
+  80:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 4:
+  81:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 22, 22);
+ 4543              		.loc 6 81 9
+ 4544 0df2 FB68     		ldr	r3, [r7, #12]
+ 4545 0df4 1622     		movs	r2, #22
+ 4546 0df6 1621     		movs	r1, #22
+ 4547 0df8 1800     		movs	r0, r3
+ 4548 0dfa FFF7FEFF 		bl	draw_sprite
+  82:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
+ 4549              		.loc 6 82 9
+ 4550 0dfe 1BE0     		b	.L183
+ 4551              	.L188:
+  83:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 5:
+  84:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 44, 22);
+ 4552              		.loc 6 84 9
+ 4553 0e00 FB68     		ldr	r3, [r7, #12]
+ 4554 0e02 1622     		movs	r2, #22
+ 4555 0e04 2C21     		movs	r1, #44
+ 4556 0e06 1800     		movs	r0, r3
+ 4557 0e08 FFF7FEFF 		bl	draw_sprite
+  85:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
+ 4558              		.loc 6 85 9
+ 4559 0e0c 14E0     		b	.L183
+ 4560              	.L187:
+  86:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 6:
+  87:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 1, 44);
+ 4561              		.loc 6 87 9
+ 4562 0e0e FB68     		ldr	r3, [r7, #12]
+ 4563 0e10 2C22     		movs	r2, #44
+ 4564 0e12 0121     		movs	r1, #1
+ 4565 0e14 1800     		movs	r0, r3
+ 4566 0e16 FFF7FEFF 		bl	draw_sprite
+  88:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
+ 4567              		.loc 6 88 9
+ 4568 0e1a 0DE0     		b	.L183
+ 4569              	.L186:
+  89:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 7:
+  90:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 22, 44);
+ 4570              		.loc 6 90 9
+ 4571 0e1c FB68     		ldr	r3, [r7, #12]
+ 4572 0e1e 2C22     		movs	r2, #44
+ 4573 0e20 1621     		movs	r1, #22
+ 4574 0e22 1800     		movs	r0, r3
+ 4575 0e24 FFF7FEFF 		bl	draw_sprite
+  91:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
+ 4576              		.loc 6 91 9
+ 4577 0e28 06E0     		b	.L183
+ 4578              	.L184:
+  92:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     case 8:
+  93:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         draw_sprite(s, 44, 44);
+ 4579              		.loc 6 93 9
+ 4580 0e2a FB68     		ldr	r3, [r7, #12]
+ 4581 0e2c 2C22     		movs	r2, #44
+ 4582 0e2e 2C21     		movs	r1, #44
+ 4583 0e30 1800     		movs	r0, r3
+ 4584 0e32 FFF7FEFF 		bl	draw_sprite
+  94:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         break;
+ 4585              		.loc 6 94 9
+ 4586 0e36 C046     		nop
+ 4587              	.L183:
+ 4588              	.L194:
+  95:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+  96:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
+ 4589              		.loc 6 96 1
+ 4590 0e38 C046     		nop
+ 4591 0e3a BD46     		mov	sp, r7
+ 4592 0e3c 04B0     		add	sp, sp, #16
+ 4593              		@ sp needed
+ 4594 0e3e 80BD     		pop	{r7, pc}
+ 4595              	.L196:
+ 4596              		.align	2
+ 4597              	.L195:
+ 4598 0e40 00000000 		.word	cross
+ 4599 0e44 00000000 		.word	circle
+ 4600 0e48 24000000 		.word	.L185
+ 4601              		.cfi_endproc
+ 4602              	.LFE42:
+ 4604              		.section	.start_section,"ax",%progbits
+ 4605              		.align	1
+ 4606              		.global	startup
+ 4607              		.syntax unified
+ 4608              		.code	16
+ 4609              		.thumb_func
+ 4610              		.fpu softvfp
+ 4612              	startup:
+ 4613              	.LFB43:
+  97:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void startup(void) __attribute__((naked)) __attribute__((section(".start_section")));
+  98:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+  99:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void startup(void)
+ 100:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
+ 4614              		.loc 6 100 1
+ 4615              		.cfi_startproc
+ 4616              		@ Naked Function: prologue and epilogue provided by programmer.
+ 4617              		@ args = 0, pretend = 0, frame = 0
+ 4618              		@ frame_needed = 1, uses_anonymous_args = 0
+ 101:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     __asm volatile(" LDR R0,=0x2001C000\n" /* set stack */
+ 4619              		.loc 6 101 5
+ 4620              		.syntax divided
+ 4621              	@ 101 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c" 1
+ 4622 0000 0248     		 LDR R0,=0x2001C000
+ 4623 0002 8546     	 MOV SP,R0
+ 4624 0004 FFF7FEFF 	 BL main
+ 4625 0008 FEE7     	.L1: B .L1
+ 4626              	
+ 4627              	@ 0 "" 2
+ 102:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                    " MOV SP,R0\n"
+ 103:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                    " BL main\n"   /* call main */
+ 104:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                    ".L1: B .L1\n" /* never return */
+ 105:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         );
+ 106:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
+ 4628              		.loc 6 106 1
+ 4629              		.thumb
+ 4630              		.syntax unified
+ 4631 000a C046     		nop
+ 4632              		.cfi_endproc
+ 4633              	.LFE43:
+ 4635              		.text
+ 4636              		.align	1
+ 4637              		.global	init_app
+ 4638              		.syntax unified
+ 4639              		.code	16
+ 4640              		.thumb_func
+ 4641              		.fpu softvfp
+ 4643              	init_app:
+ 4644              	.LFB44:
+ 107:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+ 108:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void init_app()
+ 109:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
+ 4645              		.loc 6 109 1
+ 4646              		.cfi_startproc
+ 4647              		@ args = 0, pretend = 0, frame = 0
+ 4648              		@ frame_needed = 1, uses_anonymous_args = 0
+ 4649 0e4c 80B5     		push	{r7, lr}
+ 4650              		.cfi_def_cfa_offset 8
+ 4651              		.cfi_offset 7, -8
+ 4652              		.cfi_offset 14, -4
+ 4653 0e4e 00AF     		add	r7, sp, #0
+ 4654              		.cfi_def_cfa_register 7
+ 110:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** #ifdef USBDM
+ 111:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     *((unsigned long*)0x40023830) = 0x18;
+ 112:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     __asm volatile(" LDR R0,=0x08000209\n BLX R0 \n");
+ 113:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** #endif
+ 114:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     GPIO_E.moder = 0x55555555;
+ 4655              		.loc 6 114 5
+ 4656 0e50 064B     		ldr	r3, .L199
+ 4657              		.loc 6 114 18
+ 4658 0e52 074A     		ldr	r2, .L199+4
+ 4659 0e54 1A60     		str	r2, [r3]
+ 115:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     GPIO_D.moder = 0x55000000;
+ 4660              		.loc 6 115 5
+ 4661 0e56 074B     		ldr	r3, .L199+8
+ 4662              		.loc 6 115 18
+ 4663 0e58 AA22     		movs	r2, #170
+ 4664 0e5a D205     		lsls	r2, r2, #23
+ 4665 0e5c 1A60     		str	r2, [r3]
+ 116:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     gameState = 1;
+ 4666              		.loc 6 116 15
+ 4667 0e5e 064B     		ldr	r3, .L199+12
+ 4668 0e60 0122     		movs	r2, #1
+ 4669 0e62 1A70     		strb	r2, [r3]
+ 117:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
+ 4670              		.loc 6 117 1
+ 4671 0e64 C046     		nop
+ 4672 0e66 BD46     		mov	sp, r7
+ 4673              		@ sp needed
+ 4674 0e68 80BD     		pop	{r7, pc}
+ 4675              	.L200:
+ 4676 0e6a C046     		.align	2
+ 4677              	.L199:
+ 4678 0e6c 00100240 		.word	1073876992
+ 4679 0e70 55555555 		.word	1431655765
+ 4680 0e74 000C0240 		.word	1073875968
+ 4681 0e78 00000000 		.word	gameState
+ 4682              		.cfi_endproc
+ 4683              	.LFE44:
+ 4685              		.align	1
+ 4686              		.global	ascii_write_string
+ 4687              		.syntax unified
+ 4688              		.code	16
+ 4689              		.thumb_func
+ 4690              		.fpu softvfp
+ 4692              	ascii_write_string:
+ 4693              	.LFB45:
+ 118:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+ 119:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void ascii_write_string(char text[], char point, char row)
+ 120:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
+ 4694              		.loc 6 120 1
+ 4695              		.cfi_startproc
+ 4696              		@ args = 0, pretend = 0, frame = 16
+ 4697              		@ frame_needed = 1, uses_anonymous_args = 0
+ 4698 0e7c 80B5     		push	{r7, lr}
+ 4699              		.cfi_def_cfa_offset 8
+ 4700              		.cfi_offset 7, -8
+ 4701              		.cfi_offset 14, -4
+ 4702 0e7e 84B0     		sub	sp, sp, #16
+ 4703              		.cfi_def_cfa_offset 24
+ 4704 0e80 00AF     		add	r7, sp, #0
+ 4705              		.cfi_def_cfa_register 7
+ 4706 0e82 7860     		str	r0, [r7, #4]
+ 4707 0e84 0800     		movs	r0, r1
+ 4708 0e86 1100     		movs	r1, r2
+ 4709 0e88 FB1C     		adds	r3, r7, #3
+ 4710 0e8a 021C     		adds	r2, r0, #0
+ 4711 0e8c 1A70     		strb	r2, [r3]
+ 4712 0e8e BB1C     		adds	r3, r7, #2
+ 4713 0e90 0A1C     		adds	r2, r1, #0
+ 4714 0e92 1A70     		strb	r2, [r3]
+ 121:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char* s;
+ 122:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     s = text;
+ 4715              		.loc 6 122 7
+ 4716 0e94 7B68     		ldr	r3, [r7, #4]
+ 4717 0e96 FB60     		str	r3, [r7, #12]
+ 123:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     ascii_gotoxy(1, row);
+ 4718              		.loc 6 123 5
+ 4719 0e98 BB1C     		adds	r3, r7, #2
+ 4720 0e9a 1B78     		ldrb	r3, [r3]
+ 4721 0e9c 1900     		movs	r1, r3
+ 4722 0e9e 0120     		movs	r0, #1
+ 4723 0ea0 FFF7FEFF 		bl	ascii_gotoxy
+ 124:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     while(*s) {
+ 4724              		.loc 6 124 10
+ 4725 0ea4 06E0     		b	.L202
+ 4726              	.L203:
+ 125:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         ascii_write_char(*s++);
+ 4727              		.loc 6 125 28
+ 4728 0ea6 FB68     		ldr	r3, [r7, #12]
+ 4729 0ea8 5A1C     		adds	r2, r3, #1
+ 4730 0eaa FA60     		str	r2, [r7, #12]
+ 4731              		.loc 6 125 9
+ 4732 0eac 1B78     		ldrb	r3, [r3]
+ 4733 0eae 1800     		movs	r0, r3
+ 4734 0eb0 FFF7FEFF 		bl	ascii_write_char
+ 4735              	.L202:
+ 124:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     while(*s) {
+ 4736              		.loc 6 124 11
+ 4737 0eb4 FB68     		ldr	r3, [r7, #12]
+ 4738 0eb6 1B78     		ldrb	r3, [r3]
+ 124:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     while(*s) {
+ 4739              		.loc 6 124 10
+ 4740 0eb8 002B     		cmp	r3, #0
+ 4741 0eba F4D1     		bne	.L203
+ 126:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+ 127:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     ascii_write_char('0' + point);
+ 4742              		.loc 6 127 5
+ 4743 0ebc FB1C     		adds	r3, r7, #3
+ 4744 0ebe 1B78     		ldrb	r3, [r3]
+ 4745 0ec0 3033     		adds	r3, r3, #48
+ 4746 0ec2 DBB2     		uxtb	r3, r3
+ 4747 0ec4 1800     		movs	r0, r3
+ 4748 0ec6 FFF7FEFF 		bl	ascii_write_char
+ 128:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
+ 4749              		.loc 6 128 1
+ 4750 0eca C046     		nop
+ 4751 0ecc BD46     		mov	sp, r7
+ 4752 0ece 04B0     		add	sp, sp, #16
+ 4753              		@ sp needed
+ 4754 0ed0 80BD     		pop	{r7, pc}
+ 4755              		.cfi_endproc
+ 4756              	.LFE45:
+ 4758              		.align	1
+ 4759              		.global	write_symbol
+ 4760              		.syntax unified
+ 4761              		.code	16
+ 4762              		.thumb_func
+ 4763              		.fpu softvfp
+ 4765              	write_symbol:
+ 4766              	.LFB46:
+ 129:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void write_symbol(char c)
+ 130:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
+ 4767              		.loc 6 130 1
+ 4768              		.cfi_startproc
+ 4769              		@ args = 0, pretend = 0, frame = 16
+ 4770              		@ frame_needed = 1, uses_anonymous_args = 0
+ 4771 0ed2 80B5     		push	{r7, lr}
+ 4772              		.cfi_def_cfa_offset 8
+ 4773              		.cfi_offset 7, -8
+ 4774              		.cfi_offset 14, -4
+ 4775 0ed4 84B0     		sub	sp, sp, #16
+ 4776              		.cfi_def_cfa_offset 24
+ 4777 0ed6 00AF     		add	r7, sp, #0
+ 4778              		.cfi_def_cfa_register 7
+ 4779 0ed8 0200     		movs	r2, r0
  4780 0eda FB1D     		adds	r3, r7, #7
- 4781 0edc 1B78     		ldrb	r3, [r3]
- 4782 0ede 5A1E     		subs	r2, r3, #1
- 4783              		.loc 6 130 10
- 4784 0ee0 0F20     		movs	r0, #15
- 4785 0ee2 3B18     		adds	r3, r7, r0
- 4786 0ee4 0A49     		ldr	r1, .L207
- 4787 0ee6 8A5C     		ldrb	r2, [r1, r2]
- 4788 0ee8 1A70     		strb	r2, [r3]
- 131:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     if(current == 0) {
- 4789              		.loc 6 131 7
- 4790 0eea 3B18     		adds	r3, r7, r0
- 4791 0eec 1B78     		ldrb	r3, [r3]
- 4792 0eee 002B     		cmp	r3, #0
- 4793 0ef0 09D1     		bne	.L206
- 132:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         grid[c - 1] = gameState;
- 4794              		.loc 6 132 16
- 4795 0ef2 FB1D     		adds	r3, r7, #7
- 4796 0ef4 1B78     		ldrb	r3, [r3]
- 4797 0ef6 013B     		subs	r3, r3, #1
- 4798              		.loc 6 132 21
- 4799 0ef8 064A     		ldr	r2, .L207+4
- 4800 0efa 1178     		ldrb	r1, [r2]
- 4801 0efc 044A     		ldr	r2, .L207
- 4802 0efe D154     		strb	r1, [r2, r3]
- 133:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         turn = 1;
- 4803              		.loc 6 133 14
- 4804 0f00 054B     		ldr	r3, .L207+8
- 4805 0f02 0122     		movs	r2, #1
- 4806 0f04 1A70     		strb	r2, [r3]
- 4807              	.L206:
- 134:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
- 135:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
- 4808              		.loc 6 135 1
- 4809 0f06 C046     		nop
- 4810 0f08 BD46     		mov	sp, r7
- 4811 0f0a 04B0     		add	sp, sp, #16
- 4812              		@ sp needed
- 4813 0f0c 80BD     		pop	{r7, pc}
- 4814              	.L208:
- 4815 0f0e C046     		.align	2
- 4816              	.L207:
- 4817 0f10 00000000 		.word	grid
- 4818 0f14 00000000 		.word	gameState
- 4819 0f18 00000000 		.word	turn
- 4820              		.cfi_endproc
- 4821              	.LFE46:
- 4823              		.align	1
- 4824              		.global	checkWin
- 4825              		.syntax unified
- 4826              		.code	16
- 4827              		.thumb_func
- 4828              		.fpu softvfp
- 4830              	checkWin:
- 4831              	.LFB47:
- 136:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** char checkWin()
- 137:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
- 4832              		.loc 6 137 1
- 4833              		.cfi_startproc
- 4834              		@ args = 0, pretend = 0, frame = 8
- 4835              		@ frame_needed = 1, uses_anonymous_args = 0
- 4836 0f1c 80B5     		push	{r7, lr}
- 4837              		.cfi_def_cfa_offset 8
- 4838              		.cfi_offset 7, -8
- 4839              		.cfi_offset 14, -4
- 4840 0f1e 82B0     		sub	sp, sp, #8
- 4841              		.cfi_def_cfa_offset 16
- 4842 0f20 00AF     		add	r7, sp, #0
- 4843              		.cfi_def_cfa_register 7
- 4844              	.LBB12:
- 138:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char win;
+ 4781 0edc 1A70     		strb	r2, [r3]
+ 131:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char current = grid[c - 1];
+ 4782              		.loc 6 131 27
+ 4783 0ede FB1D     		adds	r3, r7, #7
+ 4784 0ee0 1B78     		ldrb	r3, [r3]
+ 4785 0ee2 5A1E     		subs	r2, r3, #1
+ 4786              		.loc 6 131 10
+ 4787 0ee4 0F20     		movs	r0, #15
+ 4788 0ee6 3B18     		adds	r3, r7, r0
+ 4789 0ee8 0A49     		ldr	r1, .L207
+ 4790 0eea 8A5C     		ldrb	r2, [r1, r2]
+ 4791 0eec 1A70     		strb	r2, [r3]
+ 132:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     if(current == 0) {
+ 4792              		.loc 6 132 7
+ 4793 0eee 3B18     		adds	r3, r7, r0
+ 4794 0ef0 1B78     		ldrb	r3, [r3]
+ 4795 0ef2 002B     		cmp	r3, #0
+ 4796 0ef4 09D1     		bne	.L206
+ 133:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         grid[c - 1] = gameState;
+ 4797              		.loc 6 133 16
+ 4798 0ef6 FB1D     		adds	r3, r7, #7
+ 4799 0ef8 1B78     		ldrb	r3, [r3]
+ 4800 0efa 013B     		subs	r3, r3, #1
+ 4801              		.loc 6 133 21
+ 4802 0efc 064A     		ldr	r2, .L207+4
+ 4803 0efe 1178     		ldrb	r1, [r2]
+ 4804 0f00 044A     		ldr	r2, .L207
+ 4805 0f02 D154     		strb	r1, [r2, r3]
+ 134:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         turn = 1;
+ 4806              		.loc 6 134 14
+ 4807 0f04 054B     		ldr	r3, .L207+8
+ 4808 0f06 0122     		movs	r2, #1
+ 4809 0f08 1A70     		strb	r2, [r3]
+ 4810              	.L206:
+ 135:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+ 136:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
+ 4811              		.loc 6 136 1
+ 4812 0f0a C046     		nop
+ 4813 0f0c BD46     		mov	sp, r7
+ 4814 0f0e 04B0     		add	sp, sp, #16
+ 4815              		@ sp needed
+ 4816 0f10 80BD     		pop	{r7, pc}
+ 4817              	.L208:
+ 4818 0f12 C046     		.align	2
+ 4819              	.L207:
+ 4820 0f14 00000000 		.word	grid
+ 4821 0f18 00000000 		.word	gameState
+ 4822 0f1c 00000000 		.word	turn
+ 4823              		.cfi_endproc
+ 4824              	.LFE46:
+ 4826              		.align	1
+ 4827              		.global	checkWin
+ 4828              		.syntax unified
+ 4829              		.code	16
+ 4830              		.thumb_func
+ 4831              		.fpu softvfp
+ 4833              	checkWin:
+ 4834              	.LFB47:
+ 137:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** char checkWin()
+ 138:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
+ 4835              		.loc 6 138 1
+ 4836              		.cfi_startproc
+ 4837              		@ args = 0, pretend = 0, frame = 8
+ 4838              		@ frame_needed = 1, uses_anonymous_args = 0
+ 4839 0f20 80B5     		push	{r7, lr}
+ 4840              		.cfi_def_cfa_offset 8
+ 4841              		.cfi_offset 7, -8
+ 4842              		.cfi_offset 14, -4
+ 4843 0f22 82B0     		sub	sp, sp, #8
+ 4844              		.cfi_def_cfa_offset 16
+ 4845 0f24 00AF     		add	r7, sp, #0
+ 4846              		.cfi_def_cfa_register 7
+ 4847              	.LBB12:
  139:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     // cols
  140:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(char i = 0; i < 3; i++) {
- 4845              		.loc 6 140 14
- 4846 0f22 BB1D     		adds	r3, r7, #6
- 4847 0f24 0022     		movs	r2, #0
- 4848 0f26 1A70     		strb	r2, [r3]
- 4849              		.loc 6 140 5
- 4850 0f28 2EE0     		b	.L210
- 4851              	.L216:
+ 4848              		.loc 6 140 14
+ 4849 0f26 FB1D     		adds	r3, r7, #7
+ 4850 0f28 0022     		movs	r2, #0
+ 4851 0f2a 1A70     		strb	r2, [r3]
+ 4852              		.loc 6 140 5
+ 4853 0f2c 2FE0     		b	.L210
+ 4854              	.L216:
  141:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         win = win || (grid[i] == gameState && grid[3 + i] == gameState && grid[6 + i] == gameState)
- 4852              		.loc 6 141 19
- 4853 0f2a FB1D     		adds	r3, r7, #7
- 4854 0f2c 1B78     		ldrb	r3, [r3]
- 4855 0f2e 002B     		cmp	r3, #0
- 4856 0f30 19D1     		bne	.L211
- 4857              		.loc 6 141 27 discriminator 2
- 4858 0f32 BB1D     		adds	r3, r7, #6
- 4859 0f34 1B78     		ldrb	r3, [r3]
- 4860 0f36 4C4A     		ldr	r2, .L227
- 4861 0f38 D25C     		ldrb	r2, [r2, r3]
- 4862              		.loc 6 141 31 discriminator 2
- 4863 0f3a 4C4B     		ldr	r3, .L227+4
- 4864 0f3c 1B78     		ldrb	r3, [r3]
- 4865              		.loc 6 141 19 discriminator 2
- 4866 0f3e 9A42     		cmp	r2, r3
- 4867 0f40 13D1     		bne	.L212
- 4868              		.loc 6 141 54 discriminator 3
- 4869 0f42 BB1D     		adds	r3, r7, #6
- 4870 0f44 1B78     		ldrb	r3, [r3]
- 4871 0f46 0333     		adds	r3, r3, #3
- 4872              		.loc 6 141 51 discriminator 3
- 4873 0f48 474A     		ldr	r2, .L227
- 4874 0f4a D25C     		ldrb	r2, [r2, r3]
- 4875              		.loc 6 141 59 discriminator 3
- 4876 0f4c 474B     		ldr	r3, .L227+4
- 4877 0f4e 1B78     		ldrb	r3, [r3]
- 4878              		.loc 6 141 44 discriminator 3
- 4879 0f50 9A42     		cmp	r2, r3
- 4880 0f52 0AD1     		bne	.L212
- 4881              		.loc 6 141 82 discriminator 5
- 4882 0f54 BB1D     		adds	r3, r7, #6
- 4883 0f56 1B78     		ldrb	r3, [r3]
- 4884 0f58 0633     		adds	r3, r3, #6
- 4885              		.loc 6 141 79 discriminator 5
- 4886 0f5a 434A     		ldr	r2, .L227
- 4887 0f5c D25C     		ldrb	r2, [r2, r3]
- 4888              		.loc 6 141 87 discriminator 5
- 4889 0f5e 434B     		ldr	r3, .L227+4
- 4890 0f60 1B78     		ldrb	r3, [r3]
- 4891              		.loc 6 141 72 discriminator 5
- 4892 0f62 9A42     		cmp	r2, r3
- 4893 0f64 01D1     		bne	.L212
- 4894              	.L211:
- 4895              		.loc 6 141 19 discriminator 7
- 4896 0f66 0122     		movs	r2, #1
- 4897 0f68 00E0     		b	.L213
- 4898              	.L212:
- 4899              		.loc 6 141 19 is_stmt 0 discriminator 8
- 4900 0f6a 0022     		movs	r2, #0
- 4901              	.L213:
- 4902              		.loc 6 141 13 is_stmt 1 discriminator 10
- 4903 0f6c FB1D     		adds	r3, r7, #7
- 4904 0f6e 1A70     		strb	r2, [r3]
+ 4855              		.loc 6 141 15
+ 4856 0f2e 504B     		ldr	r3, .L227
+ 4857 0f30 1B78     		ldrb	r3, [r3]
+ 4858              		.loc 6 141 19
+ 4859 0f32 002B     		cmp	r3, #0
+ 4860 0f34 19D1     		bne	.L211
+ 4861              		.loc 6 141 27 discriminator 2
+ 4862 0f36 FB1D     		adds	r3, r7, #7
+ 4863 0f38 1B78     		ldrb	r3, [r3]
+ 4864 0f3a 4E4A     		ldr	r2, .L227+4
+ 4865 0f3c D25C     		ldrb	r2, [r2, r3]
+ 4866              		.loc 6 141 31 discriminator 2
+ 4867 0f3e 4E4B     		ldr	r3, .L227+8
+ 4868 0f40 1B78     		ldrb	r3, [r3]
+ 4869              		.loc 6 141 19 discriminator 2
+ 4870 0f42 9A42     		cmp	r2, r3
+ 4871 0f44 13D1     		bne	.L212
+ 4872              		.loc 6 141 54 discriminator 3
+ 4873 0f46 FB1D     		adds	r3, r7, #7
+ 4874 0f48 1B78     		ldrb	r3, [r3]
+ 4875 0f4a 0333     		adds	r3, r3, #3
+ 4876              		.loc 6 141 51 discriminator 3
+ 4877 0f4c 494A     		ldr	r2, .L227+4
+ 4878 0f4e D25C     		ldrb	r2, [r2, r3]
+ 4879              		.loc 6 141 59 discriminator 3
+ 4880 0f50 494B     		ldr	r3, .L227+8
+ 4881 0f52 1B78     		ldrb	r3, [r3]
+ 4882              		.loc 6 141 44 discriminator 3
+ 4883 0f54 9A42     		cmp	r2, r3
+ 4884 0f56 0AD1     		bne	.L212
+ 4885              		.loc 6 141 82 discriminator 5
+ 4886 0f58 FB1D     		adds	r3, r7, #7
+ 4887 0f5a 1B78     		ldrb	r3, [r3]
+ 4888 0f5c 0633     		adds	r3, r3, #6
+ 4889              		.loc 6 141 79 discriminator 5
+ 4890 0f5e 454A     		ldr	r2, .L227+4
+ 4891 0f60 D25C     		ldrb	r2, [r2, r3]
+ 4892              		.loc 6 141 87 discriminator 5
+ 4893 0f62 454B     		ldr	r3, .L227+8
+ 4894 0f64 1B78     		ldrb	r3, [r3]
+ 4895              		.loc 6 141 72 discriminator 5
+ 4896 0f66 9A42     		cmp	r2, r3
+ 4897 0f68 01D1     		bne	.L212
+ 4898              	.L211:
+ 4899              		.loc 6 141 19 discriminator 7
+ 4900 0f6a 0123     		movs	r3, #1
+ 4901 0f6c 00E0     		b	.L213
+ 4902              	.L212:
+ 4903              		.loc 6 141 19 is_stmt 0 discriminator 8
+ 4904 0f6e 0023     		movs	r3, #0
+ 4905              	.L213:
+ 4906              		.loc 6 141 13 is_stmt 1 discriminator 10
+ 4907 0f70 DAB2     		uxtb	r2, r3
+ 4908 0f72 3F4B     		ldr	r3, .L227
+ 4909 0f74 1A70     		strb	r2, [r3]
  142:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(win) {
- 4905              		.loc 6 142 11 discriminator 10
- 4906 0f70 FB1D     		adds	r3, r7, #7
- 4907 0f72 1B78     		ldrb	r3, [r3]
- 4908 0f74 002B     		cmp	r3, #0
- 4909 0f76 02D0     		beq	.L214
+ 4910              		.loc 6 142 12 discriminator 10
+ 4911 0f76 3E4B     		ldr	r3, .L227
+ 4912 0f78 1B78     		ldrb	r3, [r3]
+ 4913              		.loc 6 142 11 discriminator 10
+ 4914 0f7a 002B     		cmp	r3, #0
+ 4915 0f7c 02D0     		beq	.L214
  143:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             return win;
- 4910              		.loc 6 143 20
- 4911 0f78 FB1D     		adds	r3, r7, #7
- 4912 0f7a 1B78     		ldrb	r3, [r3]
- 4913 0f7c 70E0     		b	.L215
- 4914              	.L214:
+ 4916              		.loc 6 143 20
+ 4917 0f7e 3C4B     		ldr	r3, .L227
+ 4918 0f80 1B78     		ldrb	r3, [r3]
+ 4919 0f82 71E0     		b	.L215
+ 4920              	.L214:
  140:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         win = win || (grid[i] == gameState && grid[3 + i] == gameState && grid[6 + i] == gameState)
- 4915              		.loc 6 140 29 discriminator 2
- 4916 0f7e BB1D     		adds	r3, r7, #6
- 4917 0f80 1A78     		ldrb	r2, [r3]
- 4918 0f82 BB1D     		adds	r3, r7, #6
- 4919 0f84 0132     		adds	r2, r2, #1
- 4920 0f86 1A70     		strb	r2, [r3]
- 4921              	.L210:
+ 4921              		.loc 6 140 29 discriminator 2
+ 4922 0f84 FB1D     		adds	r3, r7, #7
+ 4923 0f86 1A78     		ldrb	r2, [r3]
+ 4924 0f88 FB1D     		adds	r3, r7, #7
+ 4925 0f8a 0132     		adds	r2, r2, #1
+ 4926 0f8c 1A70     		strb	r2, [r3]
+ 4927              	.L210:
  140:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         win = win || (grid[i] == gameState && grid[3 + i] == gameState && grid[6 + i] == gameState)
- 4922              		.loc 6 140 5 discriminator 1
- 4923 0f88 BB1D     		adds	r3, r7, #6
- 4924 0f8a 1B78     		ldrb	r3, [r3]
- 4925 0f8c 022B     		cmp	r3, #2
- 4926 0f8e CCD9     		bls	.L216
- 4927              	.LBE12:
- 4928              	.LBB13:
+ 4928              		.loc 6 140 5 discriminator 1
+ 4929 0f8e FB1D     		adds	r3, r7, #7
+ 4930 0f90 1B78     		ldrb	r3, [r3]
+ 4931 0f92 022B     		cmp	r3, #2
+ 4932 0f94 CBD9     		bls	.L216
+ 4933              	.LBE12:
+ 4934              	.LBB13:
  144:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
  145:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
  146:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     // rows
  147:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(char i = 0; i < 3; i++) {
- 4929              		.loc 6 147 14
- 4930 0f90 7B1D     		adds	r3, r7, #5
- 4931 0f92 0022     		movs	r2, #0
- 4932 0f94 1A70     		strb	r2, [r3]
- 4933              		.loc 6 147 5
- 4934 0f96 37E0     		b	.L217
- 4935              	.L222:
+ 4935              		.loc 6 147 14
+ 4936 0f96 BB1D     		adds	r3, r7, #6
+ 4937 0f98 0022     		movs	r2, #0
+ 4938 0f9a 1A70     		strb	r2, [r3]
+ 4939              		.loc 6 147 5
+ 4940 0f9c 38E0     		b	.L217
+ 4941              	.L222:
  148:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         win = win || (grid[3 * i] == gameState && grid[3 * i + 1] == gameState && grid[3 * i + 2] =
- 4936              		.loc 6 148 19
- 4937 0f98 FB1D     		adds	r3, r7, #7
- 4938 0f9a 1B78     		ldrb	r3, [r3]
- 4939 0f9c 002B     		cmp	r3, #0
- 4940 0f9e 22D1     		bne	.L218
- 4941              		.loc 6 148 30 discriminator 2
- 4942 0fa0 7B1D     		adds	r3, r7, #5
- 4943 0fa2 1A78     		ldrb	r2, [r3]
- 4944 0fa4 1300     		movs	r3, r2
- 4945 0fa6 5B00     		lsls	r3, r3, #1
- 4946 0fa8 9B18     		adds	r3, r3, r2
- 4947              		.loc 6 148 27 discriminator 2
- 4948 0faa 2F4A     		ldr	r2, .L227
- 4949 0fac D25C     		ldrb	r2, [r2, r3]
- 4950              		.loc 6 148 35 discriminator 2
- 4951 0fae 2F4B     		ldr	r3, .L227+4
- 4952 0fb0 1B78     		ldrb	r3, [r3]
- 4953              		.loc 6 148 19 discriminator 2
- 4954 0fb2 9A42     		cmp	r2, r3
- 4955 0fb4 19D1     		bne	.L219
- 4956              		.loc 6 148 58 discriminator 3
- 4957 0fb6 7B1D     		adds	r3, r7, #5
- 4958 0fb8 1A78     		ldrb	r2, [r3]
- 4959 0fba 1300     		movs	r3, r2
- 4960 0fbc 5B00     		lsls	r3, r3, #1
- 4961 0fbe 9B18     		adds	r3, r3, r2
- 4962              		.loc 6 148 62 discriminator 3
- 4963 0fc0 0133     		adds	r3, r3, #1
- 4964              		.loc 6 148 55 discriminator 3
- 4965 0fc2 294A     		ldr	r2, .L227
- 4966 0fc4 D25C     		ldrb	r2, [r2, r3]
- 4967              		.loc 6 148 67 discriminator 3
- 4968 0fc6 294B     		ldr	r3, .L227+4
- 4969 0fc8 1B78     		ldrb	r3, [r3]
- 4970              		.loc 6 148 48 discriminator 3
- 4971 0fca 9A42     		cmp	r2, r3
- 4972 0fcc 0DD1     		bne	.L219
- 4973              		.loc 6 148 90 discriminator 5
- 4974 0fce 7B1D     		adds	r3, r7, #5
- 4975 0fd0 1A78     		ldrb	r2, [r3]
- 4976 0fd2 1300     		movs	r3, r2
- 4977 0fd4 5B00     		lsls	r3, r3, #1
- 4978 0fd6 9B18     		adds	r3, r3, r2
- 4979              		.loc 6 148 94 discriminator 5
- 4980 0fd8 0233     		adds	r3, r3, #2
- 4981              		.loc 6 148 87 discriminator 5
- 4982 0fda 234A     		ldr	r2, .L227
- 4983 0fdc D25C     		ldrb	r2, [r2, r3]
- 4984              		.loc 6 148 99 discriminator 5
- 4985 0fde 234B     		ldr	r3, .L227+4
- 4986 0fe0 1B78     		ldrb	r3, [r3]
- 4987              		.loc 6 148 80 discriminator 5
- 4988 0fe2 9A42     		cmp	r2, r3
- 4989 0fe4 01D1     		bne	.L219
- 4990              	.L218:
- 4991              		.loc 6 148 19 discriminator 7
- 4992 0fe6 0122     		movs	r2, #1
- 4993 0fe8 00E0     		b	.L220
- 4994              	.L219:
- 4995              		.loc 6 148 19 is_stmt 0 discriminator 8
- 4996 0fea 0022     		movs	r2, #0
- 4997              	.L220:
- 4998              		.loc 6 148 13 is_stmt 1 discriminator 10
- 4999 0fec FB1D     		adds	r3, r7, #7
- 5000 0fee 1A70     		strb	r2, [r3]
+ 4942              		.loc 6 148 15
+ 4943 0f9e 344B     		ldr	r3, .L227
+ 4944 0fa0 1B78     		ldrb	r3, [r3]
+ 4945              		.loc 6 148 19
+ 4946 0fa2 002B     		cmp	r3, #0
+ 4947 0fa4 22D1     		bne	.L218
+ 4948              		.loc 6 148 30 discriminator 2
+ 4949 0fa6 BB1D     		adds	r3, r7, #6
+ 4950 0fa8 1A78     		ldrb	r2, [r3]
+ 4951 0faa 1300     		movs	r3, r2
+ 4952 0fac 5B00     		lsls	r3, r3, #1
+ 4953 0fae 9B18     		adds	r3, r3, r2
+ 4954              		.loc 6 148 27 discriminator 2
+ 4955 0fb0 304A     		ldr	r2, .L227+4
+ 4956 0fb2 D25C     		ldrb	r2, [r2, r3]
+ 4957              		.loc 6 148 35 discriminator 2
+ 4958 0fb4 304B     		ldr	r3, .L227+8
+ 4959 0fb6 1B78     		ldrb	r3, [r3]
+ 4960              		.loc 6 148 19 discriminator 2
+ 4961 0fb8 9A42     		cmp	r2, r3
+ 4962 0fba 19D1     		bne	.L219
+ 4963              		.loc 6 148 58 discriminator 3
+ 4964 0fbc BB1D     		adds	r3, r7, #6
+ 4965 0fbe 1A78     		ldrb	r2, [r3]
+ 4966 0fc0 1300     		movs	r3, r2
+ 4967 0fc2 5B00     		lsls	r3, r3, #1
+ 4968 0fc4 9B18     		adds	r3, r3, r2
+ 4969              		.loc 6 148 62 discriminator 3
+ 4970 0fc6 0133     		adds	r3, r3, #1
+ 4971              		.loc 6 148 55 discriminator 3
+ 4972 0fc8 2A4A     		ldr	r2, .L227+4
+ 4973 0fca D25C     		ldrb	r2, [r2, r3]
+ 4974              		.loc 6 148 67 discriminator 3
+ 4975 0fcc 2A4B     		ldr	r3, .L227+8
+ 4976 0fce 1B78     		ldrb	r3, [r3]
+ 4977              		.loc 6 148 48 discriminator 3
+ 4978 0fd0 9A42     		cmp	r2, r3
+ 4979 0fd2 0DD1     		bne	.L219
+ 4980              		.loc 6 148 90 discriminator 5
+ 4981 0fd4 BB1D     		adds	r3, r7, #6
+ 4982 0fd6 1A78     		ldrb	r2, [r3]
+ 4983 0fd8 1300     		movs	r3, r2
+ 4984 0fda 5B00     		lsls	r3, r3, #1
+ 4985 0fdc 9B18     		adds	r3, r3, r2
+ 4986              		.loc 6 148 94 discriminator 5
+ 4987 0fde 0233     		adds	r3, r3, #2
+ 4988              		.loc 6 148 87 discriminator 5
+ 4989 0fe0 244A     		ldr	r2, .L227+4
+ 4990 0fe2 D25C     		ldrb	r2, [r2, r3]
+ 4991              		.loc 6 148 99 discriminator 5
+ 4992 0fe4 244B     		ldr	r3, .L227+8
+ 4993 0fe6 1B78     		ldrb	r3, [r3]
+ 4994              		.loc 6 148 80 discriminator 5
+ 4995 0fe8 9A42     		cmp	r2, r3
+ 4996 0fea 01D1     		bne	.L219
+ 4997              	.L218:
+ 4998              		.loc 6 148 19 discriminator 7
+ 4999 0fec 0123     		movs	r3, #1
+ 5000 0fee 00E0     		b	.L220
+ 5001              	.L219:
+ 5002              		.loc 6 148 19 is_stmt 0 discriminator 8
+ 5003 0ff0 0023     		movs	r3, #0
+ 5004              	.L220:
+ 5005              		.loc 6 148 13 is_stmt 1 discriminator 10
+ 5006 0ff2 DAB2     		uxtb	r2, r3
+ 5007 0ff4 1E4B     		ldr	r3, .L227
+ 5008 0ff6 1A70     		strb	r2, [r3]
  149:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(win) {
- 5001              		.loc 6 149 11 discriminator 10
- 5002 0ff0 FB1D     		adds	r3, r7, #7
- 5003 0ff2 1B78     		ldrb	r3, [r3]
- 5004 0ff4 002B     		cmp	r3, #0
- 5005 0ff6 02D0     		beq	.L221
+ 5009              		.loc 6 149 12 discriminator 10
+ 5010 0ff8 1D4B     		ldr	r3, .L227
+ 5011 0ffa 1B78     		ldrb	r3, [r3]
+ 5012              		.loc 6 149 11 discriminator 10
+ 5013 0ffc 002B     		cmp	r3, #0
+ 5014 0ffe 02D0     		beq	.L221
  150:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             return win;
- 5006              		.loc 6 150 20
- 5007 0ff8 FB1D     		adds	r3, r7, #7
- 5008 0ffa 1B78     		ldrb	r3, [r3]
- 5009 0ffc 30E0     		b	.L215
- 5010              	.L221:
+ 5015              		.loc 6 150 20
+ 5016 1000 1B4B     		ldr	r3, .L227
+ 5017 1002 1B78     		ldrb	r3, [r3]
+ 5018 1004 30E0     		b	.L215
+ 5019              	.L221:
  147:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         win = win || (grid[3 * i] == gameState && grid[3 * i + 1] == gameState && grid[3 * i + 2] =
- 5011              		.loc 6 147 29 discriminator 2
- 5012 0ffe 7B1D     		adds	r3, r7, #5
- 5013 1000 1A78     		ldrb	r2, [r3]
- 5014 1002 7B1D     		adds	r3, r7, #5
- 5015 1004 0132     		adds	r2, r2, #1
- 5016 1006 1A70     		strb	r2, [r3]
- 5017              	.L217:
+ 5020              		.loc 6 147 29 discriminator 2
+ 5021 1006 BB1D     		adds	r3, r7, #6
+ 5022 1008 1A78     		ldrb	r2, [r3]
+ 5023 100a BB1D     		adds	r3, r7, #6
+ 5024 100c 0132     		adds	r2, r2, #1
+ 5025 100e 1A70     		strb	r2, [r3]
+ 5026              	.L217:
  147:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         win = win || (grid[3 * i] == gameState && grid[3 * i + 1] == gameState && grid[3 * i + 2] =
- 5018              		.loc 6 147 5 discriminator 1
- 5019 1008 7B1D     		adds	r3, r7, #5
- 5020 100a 1B78     		ldrb	r3, [r3]
- 5021 100c 022B     		cmp	r3, #2
- 5022 100e C3D9     		bls	.L222
- 5023              	.LBE13:
+ 5027              		.loc 6 147 5 discriminator 1
+ 5028 1010 BB1D     		adds	r3, r7, #6
+ 5029 1012 1B78     		ldrb	r3, [r3]
+ 5030 1014 022B     		cmp	r3, #2
+ 5031 1016 C2D9     		bls	.L222
+ 5032              	.LBE13:
  151:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
  152:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
  153:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     // diags
  154:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     return (grid[0] == gameState && grid[4] == gameState && grid[8] == gameState) ||
- 5024              		.loc 6 154 17
- 5025 1010 154B     		ldr	r3, .L227
- 5026 1012 1A78     		ldrb	r2, [r3]
- 5027              		.loc 6 154 21
- 5028 1014 154B     		ldr	r3, .L227+4
- 5029 1016 1B78     		ldrb	r3, [r3]
- 5030              		.loc 6 154 83
- 5031 1018 9A42     		cmp	r2, r3
- 5032 101a 0BD1     		bne	.L223
- 5033              		.loc 6 154 41 discriminator 1
- 5034 101c 124B     		ldr	r3, .L227
- 5035 101e 1A79     		ldrb	r2, [r3, #4]
- 5036              		.loc 6 154 45 discriminator 1
- 5037 1020 124B     		ldr	r3, .L227+4
- 5038 1022 1B78     		ldrb	r3, [r3]
- 5039              		.loc 6 154 34 discriminator 1
- 5040 1024 9A42     		cmp	r2, r3
- 5041 1026 05D1     		bne	.L223
- 5042              		.loc 6 154 65 discriminator 3
- 5043 1028 0F4B     		ldr	r3, .L227
- 5044 102a 1A7A     		ldrb	r2, [r3, #8]
- 5045              		.loc 6 154 69 discriminator 3
- 5046 102c 0F4B     		ldr	r3, .L227+4
- 5047 102e 1B78     		ldrb	r3, [r3]
- 5048              		.loc 6 154 58 discriminator 3
- 5049 1030 9A42     		cmp	r2, r3
- 5050 1032 11D0     		beq	.L224
- 5051              	.L223:
+ 5033              		.loc 6 154 17
+ 5034 1018 164B     		ldr	r3, .L227+4
+ 5035 101a 1A78     		ldrb	r2, [r3]
+ 5036              		.loc 6 154 21
+ 5037 101c 164B     		ldr	r3, .L227+8
+ 5038 101e 1B78     		ldrb	r3, [r3]
+ 5039              		.loc 6 154 83
+ 5040 1020 9A42     		cmp	r2, r3
+ 5041 1022 0BD1     		bne	.L223
+ 5042              		.loc 6 154 41 discriminator 1
+ 5043 1024 134B     		ldr	r3, .L227+4
+ 5044 1026 1A79     		ldrb	r2, [r3, #4]
+ 5045              		.loc 6 154 45 discriminator 1
+ 5046 1028 134B     		ldr	r3, .L227+8
+ 5047 102a 1B78     		ldrb	r3, [r3]
+ 5048              		.loc 6 154 34 discriminator 1
+ 5049 102c 9A42     		cmp	r2, r3
+ 5050 102e 05D1     		bne	.L223
+ 5051              		.loc 6 154 65 discriminator 3
+ 5052 1030 104B     		ldr	r3, .L227+4
+ 5053 1032 1A7A     		ldrb	r2, [r3, #8]
+ 5054              		.loc 6 154 69 discriminator 3
+ 5055 1034 104B     		ldr	r3, .L227+8
+ 5056 1036 1B78     		ldrb	r3, [r3]
+ 5057              		.loc 6 154 58 discriminator 3
+ 5058 1038 9A42     		cmp	r2, r3
+ 5059 103a 11D0     		beq	.L224
+ 5060              	.L223:
  155:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         (grid[2] == gameState && grid[4] == gameState && grid[6] == gameState);
- 5052              		.loc 6 155 14 discriminator 6
- 5053 1034 0C4B     		ldr	r3, .L227
- 5054 1036 9A78     		ldrb	r2, [r3, #2]
- 5055              		.loc 6 155 18 discriminator 6
- 5056 1038 0C4B     		ldr	r3, .L227+4
- 5057 103a 1B78     		ldrb	r3, [r3]
+ 5061              		.loc 6 155 14 discriminator 6
+ 5062 103c 0D4B     		ldr	r3, .L227+4
+ 5063 103e 9A78     		ldrb	r2, [r3, #2]
+ 5064              		.loc 6 155 18 discriminator 6
+ 5065 1040 0D4B     		ldr	r3, .L227+8
+ 5066 1042 1B78     		ldrb	r3, [r3]
  154:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         (grid[2] == gameState && grid[4] == gameState && grid[6] == gameState);
- 5058              		.loc 6 154 83 discriminator 6
- 5059 103c 9A42     		cmp	r2, r3
- 5060 103e 0DD1     		bne	.L225
- 5061              		.loc 6 155 38
- 5062 1040 094B     		ldr	r3, .L227
- 5063 1042 1A79     		ldrb	r2, [r3, #4]
- 5064              		.loc 6 155 42
- 5065 1044 094B     		ldr	r3, .L227+4
- 5066 1046 1B78     		ldrb	r3, [r3]
- 5067              		.loc 6 155 31
- 5068 1048 9A42     		cmp	r2, r3
- 5069 104a 07D1     		bne	.L225
- 5070              		.loc 6 155 62 discriminator 1
- 5071 104c 064B     		ldr	r3, .L227
- 5072 104e 9A79     		ldrb	r2, [r3, #6]
- 5073              		.loc 6 155 66 discriminator 1
- 5074 1050 064B     		ldr	r3, .L227+4
- 5075 1052 1B78     		ldrb	r3, [r3]
- 5076              		.loc 6 155 55 discriminator 1
- 5077 1054 9A42     		cmp	r2, r3
- 5078 1056 01D1     		bne	.L225
- 5079              	.L224:
+ 5067              		.loc 6 154 83 discriminator 6
+ 5068 1044 9A42     		cmp	r2, r3
+ 5069 1046 0DD1     		bne	.L225
+ 5070              		.loc 6 155 38
+ 5071 1048 0A4B     		ldr	r3, .L227+4
+ 5072 104a 1A79     		ldrb	r2, [r3, #4]
+ 5073              		.loc 6 155 42
+ 5074 104c 0A4B     		ldr	r3, .L227+8
+ 5075 104e 1B78     		ldrb	r3, [r3]
+ 5076              		.loc 6 155 31
+ 5077 1050 9A42     		cmp	r2, r3
+ 5078 1052 07D1     		bne	.L225
+ 5079              		.loc 6 155 62 discriminator 1
+ 5080 1054 074B     		ldr	r3, .L227+4
+ 5081 1056 9A79     		ldrb	r2, [r3, #6]
+ 5082              		.loc 6 155 66 discriminator 1
+ 5083 1058 074B     		ldr	r3, .L227+8
+ 5084 105a 1B78     		ldrb	r3, [r3]
+ 5085              		.loc 6 155 55 discriminator 1
+ 5086 105c 9A42     		cmp	r2, r3
+ 5087 105e 01D1     		bne	.L225
+ 5088              	.L224:
  154:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         (grid[2] == gameState && grid[4] == gameState && grid[6] == gameState);
- 5080              		.loc 6 154 83 discriminator 5
- 5081 1058 0123     		movs	r3, #1
- 5082 105a 00E0     		b	.L226
- 5083              	.L225:
+ 5089              		.loc 6 154 83 discriminator 5
+ 5090 1060 0123     		movs	r3, #1
+ 5091 1062 00E0     		b	.L226
+ 5092              	.L225:
  154:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         (grid[2] == gameState && grid[4] == gameState && grid[6] == gameState);
- 5084              		.loc 6 154 83 is_stmt 0 discriminator 7
- 5085 105c 0023     		movs	r3, #0
- 5086              	.L226:
+ 5093              		.loc 6 154 83 is_stmt 0 discriminator 7
+ 5094 1064 0023     		movs	r3, #0
+ 5095              	.L226:
  154:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         (grid[2] == gameState && grid[4] == gameState && grid[6] == gameState);
- 5087              		.loc 6 154 83 discriminator 9
- 5088 105e DBB2     		uxtb	r3, r3
- 5089              	.L215:
+ 5096              		.loc 6 154 83 discriminator 9
+ 5097 1066 DBB2     		uxtb	r3, r3
+ 5098              	.L215:
  156:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** }
- 5090              		.loc 6 156 1 is_stmt 1
- 5091 1060 1800     		movs	r0, r3
- 5092 1062 BD46     		mov	sp, r7
- 5093 1064 02B0     		add	sp, sp, #8
- 5094              		@ sp needed
- 5095 1066 80BD     		pop	{r7, pc}
- 5096              	.L228:
- 5097              		.align	2
- 5098              	.L227:
- 5099 1068 00000000 		.word	grid
- 5100 106c 00000000 		.word	gameState
- 5101              		.cfi_endproc
- 5102              	.LFE47:
- 5104              		.align	1
- 5105              		.global	main
- 5106              		.syntax unified
- 5107              		.code	16
- 5108              		.thumb_func
- 5109              		.fpu softvfp
- 5111              	main:
- 5112              	.LFB48:
+ 5099              		.loc 6 156 1 is_stmt 1
+ 5100 1068 1800     		movs	r0, r3
+ 5101 106a BD46     		mov	sp, r7
+ 5102 106c 02B0     		add	sp, sp, #8
+ 5103              		@ sp needed
+ 5104 106e 80BD     		pop	{r7, pc}
+ 5105              	.L228:
+ 5106              		.align	2
+ 5107              	.L227:
+ 5108 1070 00000000 		.word	win
+ 5109 1074 00000000 		.word	grid
+ 5110 1078 00000000 		.word	gameState
+ 5111              		.cfi_endproc
+ 5112              	.LFE47:
+ 5114              		.section	.rodata
+ 5115              		.align	2
+ 5116              	.LC1:
+ 5117 0048 01       		.byte	1
+ 5118 0049 01       		.byte	1
+ 5119 004a 00       		.byte	0
+ 5120 004b 00       		.byte	0
+ 5121 004c 00       		.byte	0
+ 5122 004d 00       		.byte	0
+ 5123 004e 00       		.byte	0
+ 5124 004f 00       		.byte	0
+ 5125 0050 00       		.byte	0
+ 5126              		.text
+ 5127              		.align	1
+ 5128              		.global	main
+ 5129              		.syntax unified
+ 5130              		.code	16
+ 5131              		.thumb_func
+ 5132              		.fpu softvfp
+ 5134              	main:
+ 5135              	.LFB48:
  157:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
  158:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** void main(void)
  159:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** {
- 5113              		.loc 6 159 1
- 5114              		.cfi_startproc
- 5115              		@ args = 0, pretend = 0, frame = 16
- 5116              		@ frame_needed = 1, uses_anonymous_args = 0
- 5117 1070 F0B5     		push	{r4, r5, r6, r7, lr}
- 5118              		.cfi_def_cfa_offset 20
- 5119              		.cfi_offset 4, -20
- 5120              		.cfi_offset 5, -16
- 5121              		.cfi_offset 6, -12
- 5122              		.cfi_offset 7, -8
- 5123              		.cfi_offset 14, -4
- 5124 1072 85B0     		sub	sp, sp, #20
- 5125              		.cfi_def_cfa_offset 40
- 5126 1074 00AF     		add	r7, sp, #0
- 5127              		.cfi_def_cfa_register 7
+ 5136              		.loc 6 159 1
+ 5137              		.cfi_startproc
+ 5138              		@ args = 0, pretend = 0, frame = 40
+ 5139              		@ frame_needed = 1, uses_anonymous_args = 0
+ 5140 107c B0B5     		push	{r4, r5, r7, lr}
+ 5141              		.cfi_def_cfa_offset 16
+ 5142              		.cfi_offset 4, -16
+ 5143              		.cfi_offset 5, -12
+ 5144              		.cfi_offset 7, -8
+ 5145              		.cfi_offset 14, -4
+ 5146 107e 8AB0     		sub	sp, sp, #40
+ 5147              		.cfi_def_cfa_offset 56
+ 5148 1080 00AF     		add	r7, sp, #0
+ 5149              		.cfi_def_cfa_register 7
  160:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     unsigned i;
  161:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char c;
  162:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     gameState = 1;
- 5128              		.loc 6 162 15
- 5129 1076 334B     		ldr	r3, .L236
- 5130 1078 0122     		movs	r2, #1
- 5131 107a 1A70     		strb	r2, [r3]
- 163:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     init_app();
- 5132              		.loc 6 163 5
- 5133 107c FFF7FEFF 		bl	init_app
- 164:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     graphic_initialize();
- 5134              		.loc 6 164 5
- 5135 1080 FFF7FEFF 		bl	graphic_initialize
- 165:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** #ifndef SIMULATOR
- 166:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     graphic_clear_screen();
- 167:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** #endif
- 168:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
- 169:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char xPoints = 0;
- 5136              		.loc 6 169 10
- 5137 1084 0F24     		movs	r4, #15
- 5138 1086 3B19     		adds	r3, r7, r4
- 5139 1088 0022     		movs	r2, #0
- 5140 108a 1A70     		strb	r2, [r3]
- 170:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char oPoints = 0;
- 5141              		.loc 6 170 10
- 5142 108c 0E25     		movs	r5, #14
- 5143 108e 7B19     		adds	r3, r7, r5
- 5144 1090 0022     		movs	r2, #0
- 5145 1092 1A70     		strb	r2, [r3]
- 171:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char O[] = "O: ";
- 5146              		.loc 6 171 10
- 5147 1094 0826     		movs	r6, #8
- 5148 1096 BB19     		adds	r3, r7, r6
- 5149 1098 2B4A     		ldr	r2, .L236+4
- 5150 109a 1A60     		str	r2, [r3]
- 172:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char X[] = "X: ";
- 5151              		.loc 6 172 10
- 5152 109c 3B1D     		adds	r3, r7, #4
- 5153 109e 2B4A     		ldr	r2, .L236+8
- 5154 10a0 1A60     		str	r2, [r3]
- 173:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     ascii_init();
- 5155              		.loc 6 173 5
- 5156 10a2 FFF7FEFF 		bl	ascii_init
- 174:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     ascii_write_string(X, xPoints, 1);
- 5157              		.loc 6 174 5
- 5158 10a6 3B19     		adds	r3, r7, r4
- 5159 10a8 1978     		ldrb	r1, [r3]
- 5160 10aa 3B1D     		adds	r3, r7, #4
- 5161 10ac 0122     		movs	r2, #1
- 5162 10ae 1800     		movs	r0, r3
- 5163 10b0 FFF7FEFF 		bl	ascii_write_string
- 175:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     ascii_write_string(O, oPoints, 2);
- 5164              		.loc 6 175 5
- 5165 10b4 7B19     		adds	r3, r7, r5
- 5166 10b6 1978     		ldrb	r1, [r3]
- 5167 10b8 BB19     		adds	r3, r7, r6
- 5168 10ba 0222     		movs	r2, #2
- 5169 10bc 1800     		movs	r0, r3
- 5170 10be FFF7FEFF 		bl	ascii_write_string
- 176:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     drawgrid();
- 5171              		.loc 6 176 5
- 5172 10c2 FFF7FEFF 		bl	drawgrid
- 5173              	.L235:
- 177:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     while(1) {
- 178:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         turn = 0;
- 5174              		.loc 6 178 14
- 5175 10c6 224B     		ldr	r3, .L236+12
- 5176 10c8 0022     		movs	r2, #0
- 5177 10ca 1A70     		strb	r2, [r3]
- 179:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         clear_backBuffer();
- 5178              		.loc 6 179 9
- 5179 10cc FFF7FEFF 		bl	clear_backBuffer
- 180:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         c = keyb();
- 5180              		.loc 6 180 13
- 5181 10d0 0D25     		movs	r5, #13
- 5182 10d2 7C19     		adds	r4, r7, r5
- 5183 10d4 FFF7FEFF 		bl	keyb
- 5184 10d8 0300     		movs	r3, r0
- 5185 10da 2370     		strb	r3, [r4]
- 181:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(c >= 0 && c <= 9) {
- 5186              		.loc 6 181 11
- 5187 10dc 7B19     		adds	r3, r7, r5
- 5188 10de 1B78     		ldrb	r3, [r3]
- 5189 10e0 092B     		cmp	r3, #9
- 5190 10e2 04D8     		bhi	.L230
- 182:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             write_symbol(c);
- 5191              		.loc 6 182 13
- 5192 10e4 7B19     		adds	r3, r7, r5
- 5193 10e6 1B78     		ldrb	r3, [r3]
- 5194 10e8 1800     		movs	r0, r3
- 5195 10ea FFF7FEFF 		bl	write_symbol
- 5196              	.L230:
- 183:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
- 184:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(gameState == 1) {
- 5197              		.loc 6 184 22
- 5198 10ee 154B     		ldr	r3, .L236
- 5199 10f0 1B78     		ldrb	r3, [r3]
- 5200              		.loc 6 184 11
- 5201 10f2 012B     		cmp	r3, #1
- 5202 10f4 06D1     		bne	.L231
- 185:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             draw_sprite(&big_cross, 64, 1);
- 5203              		.loc 6 185 13
- 5204 10f6 174B     		ldr	r3, .L236+16
- 5205 10f8 0122     		movs	r2, #1
- 5206 10fa 4021     		movs	r1, #64
- 5207 10fc 1800     		movs	r0, r3
- 5208 10fe FFF7FEFF 		bl	draw_sprite
- 5209 1102 05E0     		b	.L232
- 5210              	.L231:
- 186:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         } else {
- 187:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             draw_sprite(&big_circle, 64, 1);
- 5211              		.loc 6 187 13
- 5212 1104 144B     		ldr	r3, .L236+20
- 5213 1106 0122     		movs	r2, #1
- 5214 1108 4021     		movs	r1, #64
- 5215 110a 1800     		movs	r0, r3
- 5216 110c FFF7FEFF 		bl	draw_sprite
- 5217              	.L232:
- 188:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
- 189:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         drawgrid();
- 5218              		.loc 6 189 9
- 5219 1110 FFF7FEFF 		bl	drawgrid
- 190:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(checkWin()) {
- 5220              		.loc 6 190 12
- 5221 1114 FFF7FEFF 		bl	checkWin
- 191:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
- 192:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(turn) {
- 5222              		.loc 6 192 12
- 5223 1118 0D4B     		ldr	r3, .L236+12
- 5224 111a 1B78     		ldrb	r3, [r3]
- 5225              		.loc 6 192 11
- 5226 111c 002B     		cmp	r3, #0
- 5227 111e 0AD0     		beq	.L233
- 193:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             if(gameState == 1) {
- 5228              		.loc 6 193 26
- 5229 1120 084B     		ldr	r3, .L236
- 5230 1122 1B78     		ldrb	r3, [r3]
- 5231              		.loc 6 193 15
- 5232 1124 012B     		cmp	r3, #1
- 5233 1126 03D1     		bne	.L234
- 194:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 gameState = 2;
- 5234              		.loc 6 194 27
- 5235 1128 064B     		ldr	r3, .L236
- 5236 112a 0222     		movs	r2, #2
- 5237 112c 1A70     		strb	r2, [r3]
- 5238 112e 02E0     		b	.L233
- 5239              	.L234:
- 195:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             } else {
- 196:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 gameState = 1;
- 5240              		.loc 6 196 27
- 5241 1130 044B     		ldr	r3, .L236
- 5242 1132 0122     		movs	r2, #1
- 5243 1134 1A70     		strb	r2, [r3]
- 5244              	.L233:
- 197:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             }
- 198:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
- 199:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
- 200:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         delay_milli(40);
- 5245              		.loc 6 200 9
- 5246 1136 2820     		movs	r0, #40
- 5247 1138 FFF7FEFF 		bl	delay_milli
- 201:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         graphic_draw_screen();
- 5248              		.loc 6 201 9
- 5249 113c FFF7FEFF 		bl	graphic_draw_screen
- 178:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         clear_backBuffer();
- 5250              		.loc 6 178 14
- 5251 1140 C1E7     		b	.L235
- 5252              	.L237:
- 5253 1142 C046     		.align	2
- 5254              	.L236:
- 5255 1144 00000000 		.word	gameState
- 5256 1148 4F3A2000 		.word	2112079
- 5257 114c 583A2000 		.word	2112088
- 5258 1150 00000000 		.word	turn
- 5259 1154 00000000 		.word	big_cross
- 5260 1158 00000000 		.word	big_circle
- 5261              		.cfi_endproc
- 5262              	.LFE48:
- 5264              	.Letext0:
- 5265              		.file 7 "/Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/machine/_
- 5266              		.file 8 "/Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_stdi
- 5267              		.file 9 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/gpio.h"
- 5268              		.file 10 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/circle.xbm"
- 5269              		.file 11 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/cross.xbm"
- 5270              		.file 12 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/big_circle.xbm"
- 5271              		.file 13 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/big_cross.xbm"
+ 5150              		.loc 6 162 15
+ 5151 1082 554B     		ldr	r3, .L243
+ 5152 1084 0122     		movs	r2, #1
+ 5153 1086 1A70     		strb	r2, [r3]
+ 163:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char g[9] = { 1, 1, 0, 0, 0, 0, 0, 0, 0 };
+ 5154              		.loc 6 163 10
+ 5155 1088 0C23     		movs	r3, #12
+ 5156 108a FB18     		adds	r3, r7, r3
+ 5157 108c 534A     		ldr	r2, .L243+4
+ 5158 108e 03CA     		ldmia	r2!, {r0, r1}
+ 5159 1090 03C3     		stmia	r3!, {r0, r1}
+ 5160 1092 1278     		ldrb	r2, [r2]
+ 5161 1094 1A70     		strb	r2, [r3]
+ 5162              	.LBB14:
+ 164:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(char i = 0; i < 9; i++) {
+ 5163              		.loc 6 164 14
+ 5164 1096 2723     		movs	r3, #39
+ 5165 1098 FB18     		adds	r3, r7, r3
+ 5166 109a 0022     		movs	r2, #0
+ 5167 109c 1A70     		strb	r2, [r3]
+ 5168              		.loc 6 164 5
+ 5169 109e 0EE0     		b	.L230
+ 5170              	.L231:
+ 165:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         grid[i] = g[i];
+ 5171              		.loc 6 165 20 discriminator 3
+ 5172 10a0 2720     		movs	r0, #39
+ 5173 10a2 3B18     		adds	r3, r7, r0
+ 5174 10a4 1A78     		ldrb	r2, [r3]
+ 5175              		.loc 6 165 13 discriminator 3
+ 5176 10a6 3B18     		adds	r3, r7, r0
+ 5177 10a8 1B78     		ldrb	r3, [r3]
+ 5178              		.loc 6 165 20 discriminator 3
+ 5179 10aa 0C21     		movs	r1, #12
+ 5180 10ac 7918     		adds	r1, r7, r1
+ 5181 10ae 895C     		ldrb	r1, [r1, r2]
+ 5182              		.loc 6 165 17 discriminator 3
+ 5183 10b0 4B4A     		ldr	r2, .L243+8
+ 5184 10b2 D154     		strb	r1, [r2, r3]
+ 164:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(char i = 0; i < 9; i++) {
+ 5185              		.loc 6 164 29 discriminator 3
+ 5186 10b4 3B18     		adds	r3, r7, r0
+ 5187 10b6 1A78     		ldrb	r2, [r3]
+ 5188 10b8 3B18     		adds	r3, r7, r0
+ 5189 10ba 0132     		adds	r2, r2, #1
+ 5190 10bc 1A70     		strb	r2, [r3]
+ 5191              	.L230:
+ 164:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     for(char i = 0; i < 9; i++) {
+ 5192              		.loc 6 164 5 discriminator 1
+ 5193 10be 2723     		movs	r3, #39
+ 5194 10c0 FB18     		adds	r3, r7, r3
+ 5195 10c2 1B78     		ldrb	r3, [r3]
+ 5196 10c4 082B     		cmp	r3, #8
+ 5197 10c6 EBD9     		bls	.L231
+ 5198              	.LBE14:
+ 166:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     }
+ 167:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     init_app();
+ 5199              		.loc 6 167 5
+ 5200 10c8 FFF7FEFF 		bl	init_app
+ 168:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     graphic_initialize();
+ 5201              		.loc 6 168 5
+ 5202 10cc FFF7FEFF 		bl	graphic_initialize
+ 169:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** #ifndef SIMULATOR
+ 170:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     graphic_clear_screen();
+ 171:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** #endif
+ 172:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+ 173:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     int xPoints = 0;
+ 5203              		.loc 6 173 9
+ 5204 10d0 0023     		movs	r3, #0
+ 5205 10d2 3B62     		str	r3, [r7, #32]
+ 174:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     int oPoints = 0;
+ 5206              		.loc 6 174 9
+ 5207 10d4 0023     		movs	r3, #0
+ 5208 10d6 FB61     		str	r3, [r7, #28]
+ 175:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char O[] = "O: ";
+ 5209              		.loc 6 175 10
+ 5210 10d8 0823     		movs	r3, #8
+ 5211 10da FB18     		adds	r3, r7, r3
+ 5212 10dc 414A     		ldr	r2, .L243+12
+ 5213 10de 1A60     		str	r2, [r3]
+ 176:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     char X[] = "X: ";
+ 5214              		.loc 6 176 10
+ 5215 10e0 3B1D     		adds	r3, r7, #4
+ 5216 10e2 414A     		ldr	r2, .L243+16
+ 5217 10e4 1A60     		str	r2, [r3]
+ 177:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     ascii_init();
+ 5218              		.loc 6 177 5
+ 5219 10e6 FFF7FEFF 		bl	ascii_init
+ 178:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+ 179:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     drawgrid();
+ 5220              		.loc 6 179 5
+ 5221 10ea FFF7FEFF 		bl	drawgrid
+ 5222              	.L242:
+ 180:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****     while(1) {
+ 181:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         turn = 0;
+ 5223              		.loc 6 181 14
+ 5224 10ee 3F4B     		ldr	r3, .L243+20
+ 5225 10f0 0022     		movs	r2, #0
+ 5226 10f2 1A70     		strb	r2, [r3]
+ 182:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         clear_backBuffer();
+ 5227              		.loc 6 182 9
+ 5228 10f4 FFF7FEFF 		bl	clear_backBuffer
+ 183:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+ 184:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         c = keyb();
+ 5229              		.loc 6 184 13
+ 5230 10f8 1725     		movs	r5, #23
+ 5231 10fa 7C19     		adds	r4, r7, r5
+ 5232 10fc FFF7FEFF 		bl	keyb
+ 5233 1100 0300     		movs	r3, r0
+ 5234 1102 2370     		strb	r3, [r4]
+ 185:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(!win) {
+ 5235              		.loc 6 185 12
+ 5236 1104 3A4B     		ldr	r3, .L243+24
+ 5237 1106 1B78     		ldrb	r3, [r3]
+ 5238              		.loc 6 185 11
+ 5239 1108 002B     		cmp	r3, #0
+ 5240 110a 37D1     		bne	.L232
+ 186:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             if(c >= 0 && c <= 9) {
+ 5241              		.loc 6 186 15
+ 5242 110c 7B19     		adds	r3, r7, r5
+ 5243 110e 1B78     		ldrb	r3, [r3]
+ 5244 1110 092B     		cmp	r3, #9
+ 5245 1112 04D8     		bhi	.L233
+ 187:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 write_symbol(c);
+ 5246              		.loc 6 187 17
+ 5247 1114 7B19     		adds	r3, r7, r5
+ 5248 1116 1B78     		ldrb	r3, [r3]
+ 5249 1118 1800     		movs	r0, r3
+ 5250 111a FFF7FEFF 		bl	write_symbol
+ 5251              	.L233:
+ 188:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             }
+ 189:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             if(gameState == 1) {
+ 5252              		.loc 6 189 26
+ 5253 111e 2E4B     		ldr	r3, .L243
+ 5254 1120 1B78     		ldrb	r3, [r3]
+ 5255              		.loc 6 189 15
+ 5256 1122 012B     		cmp	r3, #1
+ 5257 1124 06D1     		bne	.L234
+ 190:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 draw_sprite(&big_cross, 64, 1);
+ 5258              		.loc 6 190 17
+ 5259 1126 334B     		ldr	r3, .L243+28
+ 5260 1128 0122     		movs	r2, #1
+ 5261 112a 4021     		movs	r1, #64
+ 5262 112c 1800     		movs	r0, r3
+ 5263 112e FFF7FEFF 		bl	draw_sprite
+ 5264 1132 05E0     		b	.L235
+ 5265              	.L234:
+ 191:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             } else {
+ 192:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 draw_sprite(&big_circle, 64, 1);
+ 5266              		.loc 6 192 17
+ 5267 1134 304B     		ldr	r3, .L243+32
+ 5268 1136 0122     		movs	r2, #1
+ 5269 1138 4021     		movs	r1, #64
+ 5270 113a 1800     		movs	r0, r3
+ 5271 113c FFF7FEFF 		bl	draw_sprite
+ 5272              	.L235:
+ 193:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             }
+ 194:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c **** 
+ 195:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             if(checkWin()) {
+ 5273              		.loc 6 195 16
+ 5274 1140 FFF7FEFF 		bl	checkWin
+ 5275 1144 031E     		subs	r3, r0, #0
+ 5276              		.loc 6 195 15
+ 5277 1146 0AD0     		beq	.L236
+ 196:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 if(gameState == 1) {
+ 5278              		.loc 6 196 30
+ 5279 1148 234B     		ldr	r3, .L243
+ 5280 114a 1B78     		ldrb	r3, [r3]
+ 5281              		.loc 6 196 19
+ 5282 114c 012B     		cmp	r3, #1
+ 5283 114e 03D1     		bne	.L237
+ 197:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                     xPoints = xPoints + 1;
+ 5284              		.loc 6 197 29
+ 5285 1150 3B6A     		ldr	r3, [r7, #32]
+ 5286 1152 0133     		adds	r3, r3, #1
+ 5287 1154 3B62     		str	r3, [r7, #32]
+ 5288 1156 02E0     		b	.L236
+ 5289              	.L237:
+ 198:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 } else {
+ 199:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                     oPoints = oPoints + 1;
+ 5290              		.loc 6 199 29
+ 5291 1158 FB69     		ldr	r3, [r7, #28]
+ 5292 115a 0133     		adds	r3, r3, #1
+ 5293 115c FB61     		str	r3, [r7, #28]
+ 5294              	.L236:
+ 200:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 }
+ 201:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             }
+ 202:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             if(turn) {
+ 5295              		.loc 6 202 16
+ 5296 115e 234B     		ldr	r3, .L243+20
+ 5297 1160 1B78     		ldrb	r3, [r3]
+ 5298              		.loc 6 202 15
+ 5299 1162 002B     		cmp	r3, #0
+ 5300 1164 0AD0     		beq	.L232
+ 203:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 if(gameState == 1) {
+ 5301              		.loc 6 203 30
+ 5302 1166 1C4B     		ldr	r3, .L243
+ 5303 1168 1B78     		ldrb	r3, [r3]
+ 5304              		.loc 6 203 19
+ 5305 116a 012B     		cmp	r3, #1
+ 5306 116c 03D1     		bne	.L238
+ 204:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                     gameState = 2;
+ 5307              		.loc 6 204 31
+ 5308 116e 1A4B     		ldr	r3, .L243
+ 5309 1170 0222     		movs	r2, #2
+ 5310 1172 1A70     		strb	r2, [r3]
+ 5311 1174 02E0     		b	.L232
+ 5312              	.L238:
+ 205:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 } else {
+ 206:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                     gameState = 1;
+ 5313              		.loc 6 206 31
+ 5314 1176 184B     		ldr	r3, .L243
+ 5315 1178 0122     		movs	r2, #1
+ 5316 117a 1A70     		strb	r2, [r3]
+ 5317              	.L232:
+ 207:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 }
+ 208:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             }
+ 209:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
+ 210:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         drawgrid();
+ 5318              		.loc 6 210 9
+ 5319 117c FFF7FEFF 		bl	drawgrid
+ 211:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         if(c == 10) {
+ 5320              		.loc 6 211 11
+ 5321 1180 1723     		movs	r3, #23
+ 5322 1182 FB18     		adds	r3, r7, r3
+ 5323 1184 1B78     		ldrb	r3, [r3]
+ 5324 1186 0A2B     		cmp	r3, #10
+ 5325 1188 10D1     		bne	.L239
+ 212:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             win = 0;
+ 5326              		.loc 6 212 17
+ 5327 118a 194B     		ldr	r3, .L243+24
+ 5328 118c 0022     		movs	r2, #0
+ 5329 118e 1A70     		strb	r2, [r3]
+ 5330              	.LBB15:
+ 213:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             for(int i = 0; i < 9; i++) {
+ 5331              		.loc 6 213 21
+ 5332 1190 0023     		movs	r3, #0
+ 5333 1192 BB61     		str	r3, [r7, #24]
+ 5334              		.loc 6 213 13
+ 5335 1194 07E0     		b	.L240
+ 5336              	.L241:
+ 214:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****                 grid[i] = 0;
+ 5337              		.loc 6 214 25 discriminator 3
+ 5338 1196 124A     		ldr	r2, .L243+8
+ 5339 1198 BB69     		ldr	r3, [r7, #24]
+ 5340 119a D318     		adds	r3, r2, r3
+ 5341 119c 0022     		movs	r2, #0
+ 5342 119e 1A70     		strb	r2, [r3]
+ 213:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             for(int i = 0; i < 9; i++) {
+ 5343              		.loc 6 213 36 discriminator 3
+ 5344 11a0 BB69     		ldr	r3, [r7, #24]
+ 5345 11a2 0133     		adds	r3, r3, #1
+ 5346 11a4 BB61     		str	r3, [r7, #24]
+ 5347              	.L240:
+ 213:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             for(int i = 0; i < 9; i++) {
+ 5348              		.loc 6 213 13 discriminator 1
+ 5349 11a6 BB69     		ldr	r3, [r7, #24]
+ 5350 11a8 082B     		cmp	r3, #8
+ 5351 11aa F4DD     		ble	.L241
+ 5352              	.L239:
+ 5353              	.LBE15:
+ 215:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****             }
+ 216:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         }
+ 217:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         ascii_write_string(X, xPoints, 1);
+ 5354              		.loc 6 217 9
+ 5355 11ac 3B6A     		ldr	r3, [r7, #32]
+ 5356 11ae D9B2     		uxtb	r1, r3
+ 5357 11b0 3B1D     		adds	r3, r7, #4
+ 5358 11b2 0122     		movs	r2, #1
+ 5359 11b4 1800     		movs	r0, r3
+ 5360 11b6 FFF7FEFF 		bl	ascii_write_string
+ 218:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         ascii_write_string(O, oPoints, 2);
+ 5361              		.loc 6 218 9
+ 5362 11ba FB69     		ldr	r3, [r7, #28]
+ 5363 11bc D9B2     		uxtb	r1, r3
+ 5364 11be 0823     		movs	r3, #8
+ 5365 11c0 FB18     		adds	r3, r7, r3
+ 5366 11c2 0222     		movs	r2, #2
+ 5367 11c4 1800     		movs	r0, r3
+ 5368 11c6 FFF7FEFF 		bl	ascii_write_string
+ 219:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         delay_milli(40);
+ 5369              		.loc 6 219 9
+ 5370 11ca 2820     		movs	r0, #40
+ 5371 11cc FFF7FEFF 		bl	delay_milli
+ 220:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         graphic_draw_screen();
+ 5372              		.loc 6 220 9
+ 5373 11d0 FFF7FEFF 		bl	graphic_draw_screen
+ 181:/Users/krulla/chalmers/dat017/mop/tic_tac_toe/startup.c ****         clear_backBuffer();
+ 5374              		.loc 6 181 14
+ 5375 11d4 8BE7     		b	.L242
+ 5376              	.L244:
+ 5377 11d6 C046     		.align	2
+ 5378              	.L243:
+ 5379 11d8 00000000 		.word	gameState
+ 5380 11dc 48000000 		.word	.LC1
+ 5381 11e0 00000000 		.word	grid
+ 5382 11e4 4F3A2000 		.word	2112079
+ 5383 11e8 583A2000 		.word	2112088
+ 5384 11ec 00000000 		.word	turn
+ 5385 11f0 00000000 		.word	win
+ 5386 11f4 00000000 		.word	big_cross
+ 5387 11f8 00000000 		.word	big_circle
+ 5388              		.cfi_endproc
+ 5389              	.LFE48:
+ 5391              	.Letext0:
+ 5392              		.file 7 "/Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/machine/_
+ 5393              		.file 8 "/Users/krulla/Downloads/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_stdi
+ 5394              		.file 9 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/gpio.h"
+ 5395              		.file 10 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/circle.xbm"
+ 5396              		.file 11 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/cross.xbm"
+ 5397              		.file 12 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/big_circle.xbm"
+ 5398              		.file 13 "/Users/krulla/chalmers/dat017/mop/tic_tac_toe/big_cross.xbm"
