@@ -31,6 +31,8 @@
     <File Name="startup.c"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
+    <File Name="draw.xbm"/>
+    <File Name="victory.xbm"/>
     <File Name="big_circle.xbm"/>
     <File Name="big_cross.xbm"/>
     <File Name="circle.xbm"/>
